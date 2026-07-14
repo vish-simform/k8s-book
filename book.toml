@@ -20,7 +20,7 @@ enable = true
 limit-results = 30
 
 [preprocessor.mermaid]
-command = "/home/vishvam.moliya@simform.dom/.cargo/bin/mdbook-mermaid"
+command = "mdbook-mermaid"
 
 [output.html.playground]
 editable = false
