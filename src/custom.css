@@ -1,0 +1,135 @@
+/* ============================================================
+   Kubernetes: From Zero to Production — Custom Styles
+   ============================================================ */
+
+/* Better code block readability */
+code {
+  font-size: 0.9em;
+}
+
+pre code {
+  font-size: 0.88em;
+  line-height: 1.6;
+}
+
+/* ---- Callout boxes via blockquotes ---- */
+blockquote {
+  border-left: 4px solid #3b82f6;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+  background: rgba(59, 130, 246, 0.05);
+  border-radius: 0 4px 4px 0;
+}
+
+/* Warning callouts */
+blockquote.warning {
+  border-left-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.05);
+}
+
+/* Danger/break-it callouts */
+blockquote.danger {
+  border-left-color: #ef4444;
+  background: rgba(239, 68, 68, 0.05);
+}
+
+/* Success/tip callouts */
+blockquote.tip {
+  border-left-color: #10b981;
+  background: rgba(16, 185, 129, 0.05);
+}
+
+/* ---- Lab exercise styling ---- */
+.lab-exercise {
+  border: 2px solid #10b981;
+  border-radius: 8px;
+  padding: 1em;
+  margin: 1em 0;
+  background: rgba(16, 185, 129, 0.05);
+}
+
+/* ---- Tables ---- */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+}
+
+th {
+  background: rgba(59, 130, 246, 0.1);
+  padding: 0.5em 0.75em;
+  text-align: left;
+  border-bottom: 2px solid #3b82f6;
+}
+
+td {
+  padding: 0.45em 0.75em;
+  border-bottom: 1px solid rgba(127, 127, 127, 0.2);
+}
+
+tr:hover td {
+  background: rgba(59, 130, 246, 0.04);
+}
+
+/* ---- Progress / chapter meta ---- */
+.chapter-meta {
+  font-size: 0.85em;
+  opacity: 0.7;
+  margin-bottom: 1.5em;
+}
+
+/* ---- Summary / takeaway tables ---- */
+.key-takeaways th {
+  background: rgba(16, 185, 129, 0.12);
+  border-bottom-color: #10b981;
+}
+
+/* ---- Mermaid diagram centering ---- */
+.mermaid {
+  text-align: center;
+  margin: 1.5em auto;
+  overflow-x: auto;
+}
+
+.mermaid svg {
+  min-width: 500px;
+  font-size: 16px !important;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---- details/summary (Quick Check answers) ---- */
+details {
+  border: 1px solid rgba(127, 127, 127, 0.25);
+  border-radius: 6px;
+  padding: 0.5em 1em;
+  margin: 0.5em 0;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+details[open] summary {
+  margin-bottom: 0.5em;
+}
+
+/* ---- Horizontal rule ---- */
+hr {
+  border: none;
+  border-top: 1px solid rgba(127, 127, 127, 0.2);
+  margin: 2em 0;
+}
+
+/* ---- Section time estimate badge ---- */
+.time-estimate {
+  display: inline-block;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 12px;
+  padding: 0.1em 0.6em;
+  font-size: 0.8em;
+  margin-bottom: 0.5em;
+}

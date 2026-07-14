@@ -1,0 +1,26 @@
+[book]
+title = "Kubernetes: From Zero to Production"
+authors = ["Vishvam Moliya"]
+language = "en"
+src = "src"
+
+[build]
+build-dir = "book"
+
+[output.html]
+default-theme = "navy"
+preferred-dark-theme = "navy"
+git-repository-url = ""
+additional-css = ["src/custom.css"]
+additional-js = ["mermaid.min.js", "mermaid-init.js"]
+no-section-label = false
+
+[output.html.search]
+enable = true
+limit-results = 30
+
+[preprocessor.mermaid]
+command = "/home/vishvam.moliya@simform.dom/.cargo/bin/mdbook-mermaid"
+
+[output.html.playground]
+editable = false
