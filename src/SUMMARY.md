@@ -61,98 +61,100 @@
   - [7.5 Lab: Configure a 12-Factor App](./ch07-configuration/05-lab-configuration.md)
 
 - [Chapter 8: Storage — Persistent Data in K8s](./ch08-storage/README.md)
-  - [8.1 Volumes, PersistentVolumes, and PersistentVolumeClaims](./ch08-storage/01-pv-pvc.md)
-  - [8.2 StorageClasses and Dynamic Provisioning](./ch08-storage/02-storageclasses.md)
-  - [8.3 Access Modes and Reclaim Policies](./ch08-storage/03-access-reclaim.md)
-  - [8.4 Lab: Stateful MySQL with Persistent Storage](./ch08-storage/04-lab-storage.md)
+  - [8.1 Volume Types — Ephemeral to Persistent](./ch08-storage/01-volume-types.md)
+  - [8.2 PersistentVolumes and PersistentVolumeClaims](./ch08-storage/02-pv-pvc.md)
+  - [8.3 StorageClasses and Dynamic Provisioning](./ch08-storage/03-storageclasses.md)
+  - [8.4 Access Modes and Reclaim Policies](./ch08-storage/04-access-modes-reclaim.md)
+  - [8.5 Lab: Stateful App with Persistent Storage](./ch08-storage/05-lab-storage.md)
 
 ---
 
-# Part III: The Microservice Project
+# Part III: Production Concerns
 
-- [Chapter 9: Project — KubeShop Microservices](./ch09-kubeshop-intro/README.md)
-  - [9.1 Architecture Overview — What We're Building](./ch09-kubeshop-intro/01-architecture.md)
-  - [9.2 Service Breakdown and Tech Stack](./ch09-kubeshop-intro/02-service-breakdown.md)
-  - [9.3 Containerizing the Services](./ch09-kubeshop-intro/03-containerizing.md)
-  - [9.4 Lab: Build and Push All Images](./ch09-kubeshop-intro/04-lab-containerize.md)
+- [Chapter 9: Namespaces, RBAC, and Multi-Tenancy](./ch09-rbac/README.md)
+  - [9.1 Namespaces — Cluster Partitioning](./ch09-rbac/01-namespaces.md)
+  - [9.2 RBAC — Roles, ClusterRoles, and Bindings](./ch09-rbac/02-rbac.md)
+  - [9.3 ServiceAccounts — Pod Identities](./ch09-rbac/03-serviceaccounts.md)
+  - [9.4 Multi-Tenancy Patterns](./ch09-rbac/04-multi-tenancy.md)
+  - [9.5 Lab: Lock Down a Namespace](./ch09-rbac/05-lab-rbac.md)
 
-- [Chapter 10: Deploying KubeShop to Minikube](./ch10-kubeshop-deploy/README.md)
-  - [10.1 Namespace Strategy and Resource Organization](./ch10-kubeshop-deploy/01-namespaces.md)
-  - [10.2 Deploying Backend Services](./ch10-kubeshop-deploy/02-backend-deploy.md)
-  - [10.3 Deploying Frontend and Ingress](./ch10-kubeshop-deploy/03-frontend-ingress.md)
-  - [10.4 Deploying Stateful Services (Databases)](./ch10-kubeshop-deploy/04-stateful-deploy.md)
-  - [10.5 Lab: End-to-End Deployment and Smoke Testing](./ch10-kubeshop-deploy/05-lab-full-deploy.md)
+- [Chapter 10: Health Checks and Graceful Shutdown](./ch10-health/README.md)
+  - [10.1 Why Probes Exist — The Problem They Solve](./ch10-health/01-why-probes.md)
+  - [10.2 Liveness Probes — Restart the Stuck](./ch10-health/02-liveness.md)
+  - [10.3 Readiness Probes — Control Traffic](./ch10-health/03-readiness.md)
+  - [10.4 Startup Probes — Slow-Starting Apps](./ch10-health/04-startup.md)
+  - [10.5 Graceful Shutdown and preStop Hooks](./ch10-health/05-graceful-shutdown.md)
+  - [10.6 Lab: Probes and Shutdown Drills](./ch10-health/06-lab-health.md)
 
-- [Chapter 11: Health Checks and Self-Healing](./ch11-health/README.md)
-  - [11.1 Liveness, Readiness, and Startup Probes](./ch11-health/01-probes.md)
-  - [11.2 Designing Effective Health Endpoints](./ch11-health/02-health-endpoints.md)
-  - [11.3 Lab: Chaos Engineering — Kill, Corrupt, and Watch K8s Heal](./ch11-health/03-lab-chaos.md)
+- [Chapter 11: Resource Management and Autoscaling](./ch11-resources/README.md)
+  - [11.1 Requests and Limits — The Fundamentals](./ch11-resources/01-requests-limits.md)
+  - [11.2 QoS Classes and Pod Eviction](./ch11-resources/02-qos-eviction.md)
+  - [11.3 Horizontal Pod Autoscaler (HPA)](./ch11-resources/03-hpa.md)
+  - [11.4 Vertical Pod Autoscaler (VPA)](./ch11-resources/04-vpa.md)
+  - [11.5 Cluster Autoscaler](./ch11-resources/05-cluster-autoscaler.md)
+  - [11.6 Lab: Resource Limits and HPA in Action](./ch11-resources/06-lab-resources.md)
 
 ---
 
-# Part IV: Production Readiness
+# Part IV: Advanced Operations
 
 - [Chapter 12: Helm — Package Management](./ch12-helm/README.md)
-  - [12.1 Why Helm? The Problem with Raw YAML](./ch12-helm/01-why-helm.md)
-  - [12.2 Charts, Values, Templates, and Releases](./ch12-helm/02-chart-anatomy.md)
-  - [12.3 Creating a Helm Chart for KubeShop](./ch12-helm/03-creating-charts.md)
-  - [12.4 Helm Hooks, Dependencies, and Subcharts](./ch12-helm/04-advanced-helm.md)
-  - [12.5 Lab: Helm-ify KubeShop](./ch12-helm/05-lab-helm.md)
+  - [12.1 What Helm Is and Why It Exists](./ch12-helm/01-what-is-helm.md)
+  - [12.2 Installing Charts — helm install and Repositories](./ch12-helm/02-installing-charts.md)
+  - [12.3 Chart Anatomy — Templates and Values](./ch12-helm/03-chart-anatomy.md)
+  - [12.4 Creating Your Own Chart](./ch12-helm/04-creating-charts.md)
+  - [12.5 Upgrades, Rollbacks, and Release Management](./ch12-helm/05-upgrades-rollbacks.md)
+  - [12.6 Lab: Package and Deploy a Multi-Tier App](./ch12-helm/06-lab-helm.md)
 
-- [Chapter 13: Scheduling and Resource Management](./ch13-scheduling/README.md)
-  - [13.1 The Kubernetes Scheduler](./ch13-scheduling/01-scheduler.md)
-  - [13.2 Node Affinity, Taints, and Tolerations](./ch13-scheduling/02-affinity-taints.md)
-  - [13.3 Pod Priority and Preemption](./ch13-scheduling/03-priority.md)
-  - [13.4 Horizontal Pod Autoscaler (HPA)](./ch13-scheduling/04-hpa.md)
-  - [13.5 Lab: Autoscaling Under Load](./ch13-scheduling/05-lab-autoscaling.md)
+- [Chapter 13: Observability — Logging, Metrics, and Tracing](./ch13-observability/README.md)
+  - [13.1 The Three Pillars of Observability](./ch13-observability/01-three-pillars.md)
+  - [13.2 Logging — kubectl logs, Stern, and Aggregation](./ch13-observability/02-logging.md)
+  - [13.3 Metrics — Prometheus and metrics-server](./ch13-observability/03-metrics.md)
+  - [13.4 Dashboards with Grafana](./ch13-observability/04-grafana.md)
+  - [13.5 Lab: Full Observability Stack on Minikube](./ch13-observability/05-lab-observability.md)
 
-- [Chapter 14: Security Fundamentals](./ch14-security/README.md)
-  - [14.1 RBAC — Role-Based Access Control](./ch14-security/01-rbac.md)
-  - [14.2 Service Accounts and Token Management](./ch14-security/02-service-accounts.md)
-  - [14.3 Network Policies — Microsegmentation](./ch14-security/03-network-policies.md)
-  - [14.4 Pod Security Standards and Admission](./ch14-security/04-pod-security.md)
-  - [14.5 Lab: Lock Down KubeShop](./ch14-security/05-lab-security.md)
+- [Chapter 14: Scheduling and Placement](./ch14-scheduling/README.md)
+  - [14.1 The Kubernetes Scheduler](./ch14-scheduling/01-scheduler.md)
+  - [14.2 Node Affinity and Node Selectors](./ch14-scheduling/02-node-affinity.md)
+  - [14.3 Taints and Tolerations](./ch14-scheduling/03-taints-tolerations.md)
+  - [14.4 Pod Affinity and Anti-Affinity](./ch14-scheduling/04-pod-affinity.md)
+  - [14.5 Lab: Control Where Pods Land](./ch14-scheduling/05-lab-scheduling.md)
 
-- [Chapter 15: Observability](./ch15-observability/README.md)
-  - [15.1 Logging — kubectl logs, Stern, and Log Aggregation](./ch15-observability/01-logging.md)
-  - [15.2 Metrics — Metrics Server and Prometheus](./ch15-observability/02-metrics.md)
-  - [15.3 Dashboards with Grafana](./ch15-observability/03-grafana.md)
-  - [15.4 Lab: Full Observability Stack on Minikube](./ch15-observability/04-lab-observability.md)
-
----
-
-# Part V: CI/CD & Cloud
-
-- [Chapter 16: CI/CD with GitHub Actions](./ch16-cicd-github/README.md)
-  - [16.1 Container Image CI Pipeline](./ch16-cicd-github/01-image-ci.md)
-  - [16.2 Kubernetes Manifest Validation](./ch16-cicd-github/02-manifest-validation.md)
-  - [16.3 GitOps Principles and ArgoCD Introduction](./ch16-cicd-github/03-gitops-argocd.md)
-  - [16.4 Lab: Full CI/CD Pipeline](./ch16-cicd-github/04-lab-cicd.md)
-
-- [Chapter 17: Azure Kubernetes Service (AKS)](./ch17-aks/README.md)
-  - [17.1 AKS vs Minikube — What Changes](./ch17-aks/01-aks-vs-minikube.md)
-  - [17.2 Provisioning AKS with Azure CLI](./ch17-aks/02-provisioning.md)
-  - [17.3 Azure Container Registry (ACR)](./ch17-aks/03-acr.md)
-  - [17.4 Azure DevOps Pipelines for K8s](./ch17-aks/04-azure-devops.md)
-  - [17.5 Lab: Deploy KubeShop to AKS](./ch17-aks/05-lab-aks-deploy.md)
+- [Chapter 15: Security Hardening](./ch15-security/README.md)
+  - [15.1 Pod Security Standards and Admission](./ch15-security/01-pod-security-standards.md)
+  - [15.2 Network Policies — Microsegmentation](./ch15-security/02-network-policies.md)
+  - [15.3 Secrets Management — Encryption and External Vaults](./ch15-security/03-secrets-management.md)
+  - [15.4 Image Security — Scanning and Supply Chain](./ch15-security/04-image-security.md)
+  - [15.5 Lab: Harden a Namespace End-to-End](./ch15-security/05-lab-security.md)
 
 ---
 
-# Part VI: Bonus — Internals & Troubleshooting
+# Part V: CI/CD & GitOps
 
-- [Chapter 18: Kubernetes Internals](./ch18-internals/README.md)
-  - [18.1 How a Pod Gets Created — The Full Journey](./ch18-internals/01-pod-creation-journey.md)
-  - [18.2 etcd — The Cluster Brain](./ch18-internals/02-etcd.md)
-  - [18.3 Container Runtimes and the CRI](./ch18-internals/03-container-runtimes.md)
-  - [18.4 CNI — Container Network Interface](./ch18-internals/04-cni.md)
-  - [18.5 CSI — Container Storage Interface](./ch18-internals/05-csi.md)
+- [Chapter 16: CI/CD and GitOps](./ch16-cicd/README.md)
+  - [16.1 GitOps Principles](./ch16-cicd/01-gitops-principles.md)
+  - [16.2 Container Image CI Pipeline](./ch16-cicd/02-image-ci.md)
+  - [16.3 Kubernetes Manifest Validation in CI](./ch16-cicd/03-manifest-validation.md)
+  - [16.4 ArgoCD — Declarative CD for Kubernetes](./ch16-cicd/04-argocd.md)
+  - [16.5 Lab: Full GitOps Pipeline](./ch16-cicd/05-lab-gitops.md)
 
-- [Chapter 19: Troubleshooting Playbook](./ch19-troubleshooting/README.md)
-  - [19.1 The Debugging Mental Model](./ch19-troubleshooting/01-mental-model.md)
-  - [19.2 Pod Failures — CrashLoopBackOff, ImagePullBackOff, OOMKilled](./ch19-troubleshooting/02-pod-failures.md)
-  - [19.3 Networking Failures — DNS, Services, Connectivity](./ch19-troubleshooting/03-network-failures.md)
-  - [19.4 Storage and Permission Issues](./ch19-troubleshooting/04-storage-issues.md)
-  - [19.5 The Troubleshooting Cheat Sheet](./ch19-troubleshooting/05-cheat-sheet.md)
+---
+
+# Part VI: Internals & Troubleshooting
+
+- [Chapter 17: Kubernetes Internals](./ch17-internals/README.md)
+  - [17.1 How a Pod Gets Created — The Full Journey](./ch17-internals/01-pod-creation-journey.md)
+  - [17.2 etcd — The Cluster Brain](./ch17-internals/02-etcd.md)
+  - [17.3 Container Runtimes and the CRI](./ch17-internals/03-container-runtimes.md)
+  - [17.4 CNI — Container Network Interface](./ch17-internals/04-cni.md)
+  - [17.5 CSI — Container Storage Interface](./ch17-internals/05-csi.md)
+
+- [Chapter 18: Troubleshooting Playbook](./ch18-troubleshooting/README.md)
+  - [18.1 The Debugging Mental Model](./ch18-troubleshooting/01-mental-model.md)
+  - [18.2 Pod Failures — CrashLoopBackOff, ImagePullBackOff, OOMKilled](./ch18-troubleshooting/02-pod-failures.md)
+  - [18.3 Networking Failures — DNS, Services, Connectivity](./ch18-troubleshooting/03-network-failures.md)
+  - [18.4 Storage and Permission Issues](./ch18-troubleshooting/04-storage-issues.md)
+  - [18.5 The Troubleshooting Cheat Sheet](./ch18-troubleshooting/05-cheat-sheet.md)
 
 ---
 
