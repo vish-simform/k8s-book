@@ -18,8 +18,35 @@
     }
 
     const theme = lastThemeWasLight ? 'default' : 'dark';
+
+    // Replace literal '\n' in raw mermaid syntax with '<br/>' so labels render multiline
+    function preprocessMermaidSyntax() {
+        const mermaidNodes = document.querySelectorAll('.mermaid');
+        mermaidNodes.forEach((node) => {
+            if (node.dataset.mermaidPreprocessed) return;
+            // Only preprocess raw unrendered code blocks (before SVG is rendered)
+            if (!node.querySelector('svg') && node.textContent.includes('\\n')) {
+                node.innerHTML = node.innerHTML.replace(/\\n/g, '<br/>');
+                node.dataset.mermaidPreprocessed = 'true';
+            }
+        });
+    }
+
+    // Run preprocessing before Mermaid initializes
+    preprocessMermaidSyntax();
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', preprocessMermaidSyntax);
+    }
+
     if (typeof mermaid !== 'undefined') {
-        mermaid.initialize({ startOnLoad: true, theme, fontSize: 16, flowchart: { useMaxWidth: false }, sequence: { useMaxWidth: false } });
+        mermaid.initialize({
+            startOnLoad: true,
+            theme,
+            securityLevel: 'loose',
+            fontSize: 16,
+            flowchart: { useMaxWidth: false, htmlLabels: true },
+            sequence: { useMaxWidth: false }
+        });
     }
 
     // Safely add theme click handlers if theme buttons exist in DOM
