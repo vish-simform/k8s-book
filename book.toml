@@ -12,7 +12,7 @@ default-theme = "navy"
 preferred-dark-theme = "navy"
 git-repository-url = ""
 additional-css = ["src/custom.css"]
-additional-js = ["mermaid.min.js", "mermaid-init.js"]
+additional-js = ["mermaid.min.js", "mermaid-init.js", "diagram-modal.js"]
 no-section-label = false
 
 [output.html.search]
