@@ -150,23 +150,23 @@ hr {
 .diagram-zoomable::after {
   content: "🔍 Expand Diagram";
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 10px;
+  right: 10px;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  background: rgba(15, 23, 42, 0.85);
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.9);
   color: #38bdf8;
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  padding: 4px 10px;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  padding: 6px 14px;
   border-radius: 20px;
-  font-size: 0.78rem;
-  font-weight: 500;
+  font-size: 0.92rem;
+  font-weight: 600;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.2s ease, transform 0.2s ease;
   backdrop-filter: blur(4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   z-index: 5;
 }
 
@@ -206,16 +206,16 @@ hr {
 
 .diagram-modal-toolbar {
   position: absolute;
-  top: 18px;
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000000;
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(30, 41, 59, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 6px 14px;
+  gap: 10px;
+  background: rgba(30, 41, 59, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 18px;
   border-radius: 30px;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(12px);
@@ -224,18 +224,20 @@ hr {
 }
 
 .diagram-modal-hint {
-  font-size: 0.78rem;
-  color: #94a3b8;
-  margin-right: 6px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #cbd5e1;
+  margin-right: 8px;
 }
 
 .diagram-modal-hint kbd {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  padding: 1px 5px;
-  font-size: 0.72rem;
-  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 5px;
+  padding: 2px 7px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
 }
 
 .diagram-modal-btn {
@@ -243,20 +245,25 @@ hr {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   color: #f8fafc;
   border-radius: 20px;
-  padding: 6px 12px;
-  font-size: 0.82rem;
-  font-weight: 500;
+  padding: 7px 14px;
+  font-size: 0.92rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
+.diagram-modal-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
 .diagram-modal-btn:hover {
-  background: rgba(59, 130, 246, 0.3);
-  border-color: rgba(59, 130, 246, 0.5);
+  background: rgba(59, 130, 246, 0.4);
+  border-color: rgba(59, 130, 246, 0.6);
   color: #ffffff;
 }
 
@@ -266,16 +273,16 @@ hr {
 
 .diagram-modal-divider {
   width: 1px;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.15);
+  height: 22px;
+  background: rgba(255, 255, 255, 0.2);
   margin: 0 4px;
 }
 
 .diagram-modal-close {
-  background: rgba(239, 68, 68, 0.2);
-  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.45);
   color: #fca5a5;
-  padding: 6px 10px;
+  padding: 7px 12px;
 }
 
 .diagram-modal-close:hover {
