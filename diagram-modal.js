@@ -179,15 +179,43 @@
         createModalHTML();
 
         canvas.innerHTML = '';
-        const clone = elementToClone.cloneNode(true);
 
-        if (clone.tagName.toLowerCase() === 'svg') {
+        let sourceSvg = null;
+        if (elementToClone.tagName.toLowerCase() === 'svg') {
+            sourceSvg = elementToClone;
+        } else if (elementToClone.querySelector && elementToClone.querySelector('svg')) {
+            sourceSvg = elementToClone.querySelector('svg');
+        }
+
+        let clone;
+        if (sourceSvg) {
+            // Ensure viewBox is present for scalable rendering
+            if (!sourceSvg.hasAttribute('viewBox')) {
+                try {
+                    const bbox = sourceSvg.getBBox();
+                    if (bbox && bbox.width && bbox.height) {
+                        sourceSvg.setAttribute('viewBox', `0 0 ${bbox.width} ${bbox.height}`);
+                    }
+                } catch (err) {
+                    const rect = sourceSvg.getBoundingClientRect();
+                    if (rect.width && rect.height) {
+                        sourceSvg.setAttribute('viewBox', `0 0 ${rect.width} ${rect.height}`);
+                    }
+                }
+            }
+
+            clone = sourceSvg.cloneNode(true);
             clone.removeAttribute('width');
             clone.removeAttribute('height');
-            clone.style.maxWidth = '85vw';
-            clone.style.maxHeight = '78vh';
-            clone.style.width = 'auto';
-            clone.style.height = 'auto';
+            clone.style.width = '100%';
+            clone.style.height = '100%';
+            clone.style.maxWidth = '100%';
+            clone.style.maxHeight = '100%';
+            clone.style.display = 'block';
+            clone.style.visibility = 'visible';
+            clone.style.opacity = '1';
+        } else {
+            clone = elementToClone.cloneNode(true);
         }
 
         canvas.appendChild(clone);

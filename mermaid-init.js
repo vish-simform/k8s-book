@@ -6,7 +6,8 @@
     const darkThemes = ['ayu', 'navy', 'coal'];
     const lightThemes = ['light', 'rust'];
 
-    const classList = document.getElementsByTagName('html')[0].classList;
+    const htmlEl = document.getElementsByTagName('html')[0];
+    const classList = htmlEl ? htmlEl.classList : [];
 
     let lastThemeWasLight = true;
     for (const cssClass of classList) {
@@ -17,23 +18,30 @@
     }
 
     const theme = lastThemeWasLight ? 'default' : 'dark';
-    mermaid.initialize({ startOnLoad: true, theme, fontSize: 16, flowchart: { useMaxWidth: false }, sequence: { useMaxWidth: false } });
+    if (typeof mermaid !== 'undefined') {
+        mermaid.initialize({ startOnLoad: true, theme, fontSize: 16, flowchart: { useMaxWidth: false }, sequence: { useMaxWidth: false } });
+    }
 
-    // Simplest way to make mermaid re-render the diagrams in the new theme is via refreshing the page
-
+    // Safely add theme click handlers if theme buttons exist in DOM
     for (const darkTheme of darkThemes) {
-        document.getElementById(darkTheme).addEventListener('click', () => {
-            if (lastThemeWasLight) {
-                window.location.reload();
-            }
-        });
+        const btn = document.getElementById(darkTheme);
+        if (btn) {
+            btn.addEventListener('click', () => {
+                if (lastThemeWasLight) {
+                    window.location.reload();
+                }
+            });
+        }
     }
 
     for (const lightTheme of lightThemes) {
-        document.getElementById(lightTheme).addEventListener('click', () => {
-            if (!lastThemeWasLight) {
-                window.location.reload();
-            }
-        });
+        const btn = document.getElementById(lightTheme);
+        if (btn) {
+            btn.addEventListener('click', () => {
+                if (!lastThemeWasLight) {
+                    window.location.reload();
+                }
+            });
+        }
     }
 })();
