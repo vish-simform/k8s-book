@@ -1,6 +1,6 @@
 # Kubernetes Book — Project State & Context Checkpoint
 
-**Date:** 2026-07-28 (Ch13 completed)  
+**Date:** 2026-07-29 (Ch17 + Ch18 + Appendices completed)  
 **Project Path:** `/home/vishvam.moliya@simform.dom/tasks/k8s/k8s-book`  
 **Target Output:** mdBook build (`book/`)
 
@@ -9,9 +9,9 @@
 ## 📌 Executive Summary
 
 The book **"Kubernetes: From Zero to Production"** is being written as an mdBook.  
-Chapters **1 through 16** are **100% written, verified, and cleanly building** with `mdbook build`.
+**All chapters (1 through 18) and all appendices are 100% written, verified, and cleanly building** with `mdbook build` — **zero warnings**.
 
-The repository structure and `SUMMARY.md` have been fully reconciled and cleaned up. All orphan files, duplicate stubs, and legacy drift have been resolved.
+The book is **COMPLETE**.
 
 ---
 
@@ -36,9 +36,12 @@ The repository structure and `SUMMARY.md` have been fully reconciled and cleaned
 | **Ch 14** | Scheduling and Placement | ✅ Complete | `src/ch14-scheduling/` |
 | **Ch 15** | Security Hardening | ✅ Complete | `src/ch15-security/` |
 | **Ch 16** | CI/CD and GitOps | ✅ Complete | `src/ch16-cicd/` |
-| **Ch 17** | Kubernetes Internals | ⏳ **NEXT STEP** | `src/ch17-internals/` (stubs ready) |
-| **Ch 18** | Troubleshooting Playbook | 🔜 Queued | `src/ch18-troubleshooting/` (stubs ready) |
-| **Apps A-D**| Appendices (YAML, kubectl, Error ref, Manifests) | 🔜 Queued | `src/appendix-*.md` |
+| **Ch 17** | Kubernetes Internals | ✅ Complete | `src/ch17-internals/` |
+| **Ch 18** | Troubleshooting Playbook | ✅ Complete | `src/ch18-troubleshooting/` |
+| **App A** | YAML Crash Course | ✅ Complete | `src/appendix-a-yaml.md` |
+| **App B** | kubectl Cheat Sheet | ✅ Complete | `src/appendix-b-kubectl-cheatsheet.md` |
+| **App C** | Common K8s Error Reference | ✅ Complete | `src/appendix-c-error-reference.md` |
+| **App D** | Resource Manifests Reference | ✅ Complete | `src/appendix-d-manifests.md` |
 
 ---
 
@@ -55,15 +58,18 @@ When generating new chapters (e.g., Chapter 13 onwards), strictly follow these r
    - **Fast-paced, visual, scannable:** TL;DR at top, comparison tables, Mermaid diagrams.
    - **Real commands:** Use runnable bash/kubectl commands suitable for Minikube.
    - **Interactive Quick Checks:** End conceptual sections with a `✅ Quick Check` containing 2-3 collapsible questions (`<details><summary>...`).
-   - **No Tag Conflicts:** Do NOT place unescaped HTML tags (like `<pending>` or `<none>`) inside text without escaping or placing in code blocks, to avoid mdBook parser warnings.
+   - **No Tag Conflicts:** Do NOT place unescaped HTML tags (like `<pending>` or `<none>`) inside prose text outside of code blocks. Use plain words or `ALL_CAPS` placeholders instead (e.g., `POD_NAME` not `<pod-name>`).
 
 3. **Build Command:**
    - Always verify build using: `cd /home/vishvam.moliya@simform.dom/tasks/k8s/k8s-book && ~/.cargo/bin/mdbook build`
 
 ---
 
-## 🚀 Immediate Next Action for the New Chat
+## 🚀 Possible Next Steps
 
-Prompt to use in the new chat:
+The core book is complete. Options for follow-on work:
 
-> "I am continuing work on the Kubernetes mdBook project. Read `CONTINUATION_CONTEXT.md` in `/home/vishvam.moliya@simform.dom/tasks/k8s/k8s-book` and continue with **Chapter 17: Kubernetes Internals**."
+1. **Deploy to Vercel** — The `vercel.json` config is in place. Run `vercel deploy` from the project root.
+2. **Add a Lab Chapter for Ch17/Ch18** — Both chapters currently have no lab section. Could add interactive debugging exercises.
+3. **Review pass** — Re-read any chapter for polish, factual accuracy, or depth improvements.
+4. **Custom CSS enhancements** — Further polish the visual design of the rendered book.
