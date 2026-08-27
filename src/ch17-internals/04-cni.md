@@ -1,8 +1,13 @@
 # 17.4 CNI — Container Network Interface
 
-⏱️ **~8 min read**
+⏱️ **6 min read · 5 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** Every pod gets a real IP address. The **CNI (Container Network Interface)** plugin is responsible for assigning that IP and setting up routes so pods on different nodes can talk to each other. Kubernetes defines the interface; plugins like Flannel, Calico, and Cilium implement it.
+
+> **After this section you will be able to:**
+> - Explain the Container Network Interface (CNI) standard and pod IP assignment mechanisms
+> - Compare overlay network implementations (Flannel VXLAN) with eBPF/routed networks (Calico, Cilium)
+> - Inspect virtual ethernet pairs (`veth`), network namespaces, and bridge interfaces on nodes
 
 ---
 

@@ -1,8 +1,13 @@
 # 14.1 The Kubernetes Scheduler — How It Picks a Node
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 5 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** The `kube-scheduler` watches for unscheduled pods and picks the best node for each one by running every candidate node through two phases: **Filtering** (eliminate nodes that can't run the pod) and **Scoring** (rank the survivors; highest score wins). You influence both phases using the placement mechanisms covered in this chapter.
+
+> **After this section you will be able to:**
+> - Trace the two-phase scheduling process: Filtering (predicates) and Scoring (priorities)
+> - Understand how node resources, ports, and selectors influence placement decisions
+> - Diagnose and resolve scheduling failures for `Pending` pods
 
 ---
 
@@ -12,23 +17,23 @@ Every pod starts life as `Pending` — it exists in etcd but has no `nodeName`. 
 
 ```mermaid
 graph TD
-    P["New Pod\n(Pending, no nodeName)"] --> WATCH["kube-scheduler\nwatching API server"]
-    WATCH --> FILTER["Phase 1: Filtering\n(eliminate unfit nodes)"]
-    FILTER --> SCORE["Phase 2: Scoring\n(rank remaining nodes)"]
-    SCORE --> BIND["Bind: write nodeName\nto pod spec"]
-    BIND --> KUBELET["kubelet on chosen node\npulls image + starts containers"]
+    P["New Pod<br/>(Pending, no nodeName)"] --> WATCH["kube-scheduler<br/>watching API server"]
+    WATCH --> FILTER["Phase 1: Filtering<br/>(eliminate unfit nodes)"]
+    FILTER --> SCORE["Phase 2: Scoring<br/>(rank remaining nodes)"]
+    SCORE --> BIND["Bind: write nodeName<br/>to pod spec"]
+    BIND --> KUBELET["kubelet on chosen node<br/>pulls image + starts containers"]
 
     subgraph "Filter Plugins (examples)"
-        F1["NodeResourcesFit\n(enough CPU/memory?)"]
-        F2["NodeAffinity\n(label matches?)"]
-        F3["TaintToleration\n(tolerates taints?)"]
-        F4["PodTopologySpread\n(spread constraints met?)"]
+        F1["NodeResourcesFit<br/>(enough CPU/memory?)"]
+        F2["NodeAffinity<br/>(label matches?)"]
+        F3["TaintToleration<br/>(tolerates taints?)"]
+        F4["PodTopologySpread<br/>(spread constraints met?)"]
     end
 
     subgraph "Score Plugins (examples)"
-        S1["LeastAllocated\n(spread load)"]
-        S2["NodeAffinity\n(preferred labels)"]
-        S3["ImageLocality\n(image already pulled?)"]
+        S1["LeastAllocated<br/>(spread load)"]
+        S2["NodeAffinity<br/>(preferred labels)"]
+        S3["ImageLocality<br/>(image already pulled?)"]
     end
 
     FILTER -.-> F1 & F2 & F3 & F4

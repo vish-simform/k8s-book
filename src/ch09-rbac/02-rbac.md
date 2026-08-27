@@ -1,8 +1,13 @@
 # 9.2 RBAC — Roles, ClusterRoles, and Bindings
 
-⏱️ **~8 min read**
+⏱️ **6 min read · 7 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** RBAC (Role-Based Access Control) controls who can do what on which resources. A **Role** defines permissions. A **RoleBinding** says "this user/group/serviceaccount gets those permissions." It's the primary security mechanism for controlling kubectl access.
+
+> **After this section you will be able to:**
+> - Define granular API permissions using `Roles` (namespaced) and `ClusterRoles` (cluster-wide)
+> - Bind permissions to users, groups, and service accounts via `RoleBindings` and `ClusterRoleBindings`
+> - Audit and verify effective access permissions using `kubectl auth can-i`
 
 ---
 
@@ -10,10 +15,10 @@
 
 ```mermaid
 graph LR
-    SUBJECT["Subject\n(User / Group / ServiceAccount)"] -->|bound by| RB[RoleBinding]
-    RB --> ROLE["Role\n(set of permissions)"]
-    ROLE --> RESOURCES["Resources\n(pods, secrets, deployments...)"]
-    ROLE --> VERBS["Verbs\n(get, list, create, delete...)"]
+    SUBJECT["Subject<br/>(User / Group / ServiceAccount)"] -->|bound by| RB[RoleBinding]
+    RB --> ROLE["Role<br/>(set of permissions)"]
+    ROLE --> RESOURCES["Resources<br/>(pods, secrets, deployments...)"]
+    ROLE --> VERBS["Verbs<br/>(get, list, create, delete...)"]
 ```
 
 Four object types:

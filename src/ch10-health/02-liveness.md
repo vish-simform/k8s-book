@@ -1,8 +1,13 @@
 # 10.2 Liveness Probes — Restart the Stuck
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** A liveness probe answers "Is this container still functional?" If it fails `failureThreshold` times in a row, Kubernetes kills and restarts the container. Use it for apps that can get stuck without crashing.
+
+> **After this section you will be able to:**
+> - Configure HTTP, TCP, and Exec liveness probes to detect deadlocked processes
+> - Tune `initialDelaySeconds`, `periodSeconds`, `timeoutSeconds`, and `failureThreshold`
+> - Avoid catastrophic restart loops caused by overly aggressive liveness timeouts
 
 ---
 

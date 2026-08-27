@@ -1,8 +1,13 @@
 # 5.2 NodePort — Exposing to the Outside
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** NodePort opens a port (30000–32767) on **every node** in the cluster and forwards traffic to your Service. It's the simplest way to expose an app externally — but rarely used in production (Ingress is preferred).
+
+> **After this section you will be able to:**
+> - Explain how NodePort exposes cluster services externally across dedicated node ports (30000–32767)
+> - Trace packet flow from external clients through kube-proxy to target pods
+> - Understand the trade-offs and port-exhaustion constraints of NodePort in production
 
 ---
 
@@ -27,7 +32,7 @@ spec:
 
 ```mermaid
 graph LR
-    Browser["Your Browser\nlocalhost:30080"] -->|NodePort| N1["Node\n:30080"]
+    Browser["Your Browser<br/>localhost:30080"] -->|NodePort| N1["Node<br/>:30080"]
     N1 --> SVC[Service ClusterIP]
     SVC --> P1[Pod :80]
     SVC --> P2[Pod :80]

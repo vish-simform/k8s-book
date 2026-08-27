@@ -1,8 +1,13 @@
 # 11.3 Horizontal Pod Autoscaler (HPA)
 
-⏱️ **~7 min read**
+⏱️ **6 min read · 7 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** HPA watches CPU (or custom) metrics and automatically scales your Deployment's replica count up when load increases and down when it drops. It's the standard autoscaling primitive for stateless apps.
+
+> **After this section you will be able to:**
+> - Deploy Horizontal Pod Autoscalers (HPA) to scale replica counts based on CPU/Memory utilization
+> - Configure custom scaling behavior policies (scale-up aggressiveness and scale-down stabilization windows)
+> - Test live autoscaling under synthetic load with `kubectl run` traffic generators
 
 ---
 
@@ -11,11 +16,11 @@
 ```mermaid
 graph LR
     subgraph "HPA Control Loop"
-        MS[Metrics Server\nPolls pod metrics] -->|Every 15s| HPA[HPA Controller]
-        HPA -->|Calculates desired replicas| MATH["desiredReplicas =\ncurrentReplicas × (currentUtil / targetUtil)"]
-        MATH --> DEPLOY[Deployment\nscale replicas]
+        MS[Metrics Server<br/>Polls pod metrics] -->|Every 15s| HPA[HPA Controller]
+        HPA -->|Calculates desired replicas| MATH["desiredReplicas =<br/>currentReplicas × (currentUtil / targetUtil)"]
+        MATH --> DEPLOY[Deployment<br/>scale replicas]
     end
-    DEPLOY --> PODS[Pods\n2→4→6→8→4→2]
+    DEPLOY --> PODS[Pods<br/>2→4→6→8→4→2]
 ```
 
 **The formula:**

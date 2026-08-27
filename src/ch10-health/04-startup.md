@@ -1,8 +1,13 @@
 # 10.4 Startup Probes — Slow-Starting Apps
 
-⏱️ **~4 min read**
+⏱️ **4 min read · 5 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** A startup probe disables liveness and readiness checks until it passes. This solves the "my app takes 3 minutes to start and liveness keeps killing it" problem — without setting a huge `initialDelaySeconds` on every probe.
+
+> **After this section you will be able to:**
+> - Protect legacy or slow-starting applications from premature liveness kills using Startup Probes
+> - Configure exponential startup allowances without compromising fast runtime failure detection
+> - Transition seamlessly from startup phase to normal liveness/readiness evaluation
 
 ---
 

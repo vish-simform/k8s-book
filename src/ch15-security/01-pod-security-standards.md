@@ -1,8 +1,17 @@
 # 15.1 Pod Security Standards and Admission
 
-⏱️ **~8 min read**
+⏱️ **6 min read · 7 min hands-on** · 🔴 Advanced
+
+> 📡 **Scenario:** A developer deploys a third-party analytics container that requests `privileged: true` and mounts the host `/etc` directory. An attacker exploits a known vulnerability inside the container and gains root access to the entire cloud node.
+>
+> *After this section, you'll be able to enforce cluster-wide Pod Security Standards that block unsafe container configurations before they can ever run.*
 
 > **TL;DR:** Pod Security Standards (PSS) are built-in Kubernetes policies that prevent containers from running with dangerous privileges — root access, host network sharing, mounting host paths, etc. You apply them at the **namespace level** using labels. The three levels are **Privileged** (anything goes), **Baseline** (known escapes blocked), and **Restricted** (hardened — best practice for production).
+
+> **After this section you will be able to:**
+> - Understand the three Pod Security Standard tiers: `Privileged`, `Baseline`, and `Restricted`
+> - Enforce Pod Security Admission at the namespace level using `enforce`, `audit`, and `warn` labels
+> - Configure hardened `securityContext` parameters (non-root, read-only rootfs, dropped capabilities)
 
 ---
 
@@ -25,13 +34,13 @@ Any one of these can allow a compromised container to break out of the container
 ```mermaid
 graph LR
     subgraph "Privileged"
-        P["No restrictions\nAll capabilities allowed\nOnly for: system daemons,\nCNI plugins"]
+        P["No restrictions<br/>All capabilities allowed<br/>Only for: system daemons,<br/>CNI plugins"]
     end
     subgraph "Baseline"
-        B["Blocks known escapes:\n✗ privileged containers\n✗ hostPID/hostNetwork\n✗ dangerous capabilities\n✓ Allows: non-root user optional"]
+        B["Blocks known escapes:<br/>✗ privileged containers<br/>✗ hostPID/hostNetwork<br/>✗ dangerous capabilities<br/>✓ Allows: non-root user optional"]
     end
     subgraph "Restricted"
-        R["Hardened:\n✗ All baseline blocks\n✓ Must run as non-root\n✓ Must drop ALL capabilities\n✓ Must have read-only root filesystem\n✓ Seccomp profile required"]
+        R["Hardened:<br/>✗ All baseline blocks<br/>✓ Must run as non-root<br/>✓ Must drop ALL capabilities<br/>✓ Must have read-only root filesystem<br/>✓ Seccomp profile required"]
     end
 
     P --> B --> R

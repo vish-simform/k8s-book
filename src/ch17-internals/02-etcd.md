@@ -1,8 +1,13 @@
 # 17.2 etcd — The Cluster Brain
 
-⏱️ **~8 min read**
+⏱️ **6 min read · 6 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** etcd is a distributed key-value store that holds *all* cluster state. If etcd disappears, your cluster freezes. If etcd corrupts, your cluster is gone. Understanding it builds appropriate respect — and good backup habits.
+
+> **After this section you will be able to:**
+> - Explain the Raft consensus algorithm, quorum math, and leader election in etcd
+> - Inspect raw key-value hierarchies and resource revisions with `etcdctl`
+> - Execute automated cluster backup and restore operations with etcd snapshots
 
 ---
 
@@ -42,11 +47,8 @@ All K8s data is stored under the `/registry/` prefix:
 ### Try It — Read etcd Directly
 
 ```bash
-# SSH into the minikube node (runs etcd)
-minikube ssh
-
-# List all keys (requires etcd client)
-sudo docker exec -it $(sudo docker ps | grep etcd | awk '{print $1}') \
+# Query etcd directly from your host via kubectl exec into the static etcd pod
+kubectl exec -it etcd-minikube -n kube-system -- \
   etcdctl \
   --endpoints=https://127.0.0.1:2379 \
   --cacert=/var/lib/minikube/certs/etcd/ca.crt \

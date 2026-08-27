@@ -290,3 +290,23 @@ kubectl apply -f manifest.yaml --force-conflicts --server-side
 | `137` | SIGKILL (9) | OOMKilled or force-killed |
 | `139` | SIGSEGV (11) | Segmentation fault |
 | `143` | SIGTERM (15) | Graceful termination |
+
+---
+
+## ✅ Quick Check
+
+**Q1:** What is the difference between container exit code 137 and exit code 143?
+
+<details>
+<summary>Answer</summary>
+Exit code 137 represents <code>128 + 9 (SIGKILL)</code>, which means the process was abruptly terminated without chance to clean up — most commonly caused by the Linux OOM Killer when exceeding memory limits or failing to terminate before <code>terminationGracePeriodSeconds</code> expired. Exit code 143 represents <code>128 + 15 (SIGTERM)</code>, indicating standard graceful shutdown.
+</details>
+
+**Q2:** When debugging a `Connection refused` error on a Service, what are the top 2 things to verify with `kubectl`?
+
+<details>
+<summary>Answer</summary>
+1. Check that the Service's <code>spec.selector</code> matches the labels on your target pods (verify with <code>kubectl get endpoints &lt;svc-name&gt;</code> to ensure endpoints are listed).<br/>
+2. Check that the Service's <code>spec.ports[*].targetPort</code> matches the actual port your application container is listening on.
+</details>
+

@@ -1,8 +1,13 @@
 # 18.2 Pod Failures — CrashLoopBackOff, ImagePullBackOff, OOMKilled
 
-⏱️ **~10 min read**
+⏱️ **7 min read · 8 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** The three most common pod failure modes each have a distinct fingerprint. Learn to recognize them immediately and drill straight to the cause.
+
+> **After this section you will be able to:**
+> - Diagnose and fix `CrashLoopBackOff` using exit codes and `kubectl logs --previous`
+> - Resolve `ImagePullBackOff` and `ErrImagePull` due to missing tags or secret credentials
+> - Identify and resolve `OOMKilled` (Exit Code 137) and resource CPU starvation issues
 
 ---
 

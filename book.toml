@@ -10,9 +10,9 @@ build-dir = "book"
 [output.html]
 default-theme = "navy"
 preferred-dark-theme = "navy"
-git-repository-url = ""
+git-repository-url = "" # TODO: Set to actual GitHub repository URL
 additional-css = ["src/custom.css"]
-additional-js = ["mermaid.min.js", "mermaid-init.js", "diagram-modal.js"]
+additional-js = ["mermaid.min.js", "mermaid-init.js", "diagram-modal.js", "progress-bar.js", "back-to-top.js"]
 no-section-label = false
 
 [output.html.search]

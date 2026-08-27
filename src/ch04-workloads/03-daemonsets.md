@@ -1,8 +1,13 @@
 # 4.3 DaemonSets — One Per Node
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** A DaemonSet ensures exactly one pod runs on **every node** in the cluster. When new nodes are added, a pod is automatically scheduled on them. When nodes are removed, the pods are garbage collected.
+
+> **After this section you will be able to:**
+> - Identify node-level infrastructure use cases (logging agents, monitoring, CNI) suited for DaemonSets
+> - Explain how DaemonSet controllers schedule pods across existing and newly joined nodes
+> - Manage DaemonSet rollout strategies and node-selector constraints
 
 ---
 
@@ -79,14 +84,14 @@ graph LR
     subgraph "Node A"
         HF["/var/log/ on Node"]
         subgraph "DaemonSet Pod"
-            DS[log-collector\nmounts /var/log]
+            DS[log-collector<br/>mounts /var/log]
         end
         HF --> DS
     end
     subgraph "Node B"
         HF2["/var/log/ on Node"]
         subgraph "DaemonSet Pod"
-            DS2[log-collector\nmounts /var/log]
+            DS2[log-collector<br/>mounts /var/log]
         end
         HF2 --> DS2
     end

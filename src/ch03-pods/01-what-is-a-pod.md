@@ -1,8 +1,13 @@
 # 3.1 What Is a Pod, Really?
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟢 Beginner
 
 > **TL;DR:** A Pod is NOT a container. It's a wrapper around one or more containers that share the same network namespace and can share storage volumes. It's the smallest deployable unit in Kubernetes.
+
+> **After this section you will be able to:**
+> - Explain why Pods are the fundamental atomic unit of deployment in Kubernetes
+> - Describe how co-located containers share network namespaces (`localhost`) and storage volumes
+> - Author, deploy, and inspect a minimal Pod manifest from scratch
 
 ---
 
@@ -42,14 +47,14 @@ This is what makes pods special. Every container in a pod shares:
 ```mermaid
 graph TB
     subgraph "Pod"
-        NET[Shared Network Namespace\nSame IP address\nSame localhost]
-        subgraph "Container A\nnginx"
+        NET[Shared Network Namespace<br/>Same IP address<br/>Same localhost]
+        subgraph "Container A<br/>nginx"
             PA[:80]
         end
-        subgraph "Container B\nlog-shipper"
+        subgraph "Container B<br/>log-shipper"
             PB[:9000]
         end
-        VOL[Shared Volume\n/var/log]
+        VOL[Shared Volume<br/>/var/log]
         PA --- NET
         PB --- NET
         PA --- VOL

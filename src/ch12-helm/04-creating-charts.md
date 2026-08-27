@@ -1,8 +1,13 @@
 # 12.4 Creating Your Own Chart
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 8 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** `helm create my-chart` scaffolds a complete, working chart with example templates. Strip it down to what you need and fill in your app's specifics. The scaffold follows best practices (labels, helpers, NOTES.txt) from the start.
+
+> **After this section you will be able to:**
+> - Scaffold a new custom chart structure with `helm create`
+> - Parameterize application manifests with reusable variables and templated labels
+> - Validate chart syntax and formatting with `helm lint`
 
 ---
 

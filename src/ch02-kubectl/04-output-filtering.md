@@ -1,8 +1,13 @@
 # 2.4 Output Formatting, Filtering, and JSONPath
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 8 min hands-on** · 🟢 Beginner
 
 > **TL;DR:** `kubectl get` is not just for listing things — with the right flags it's a precision query tool. `-o wide`, `-o yaml`, `-o jsonpath`, and `-l` (label selectors) are how senior engineers extract exactly the information they need.
+
+> **After this section you will be able to:**
+> - Extract targeted JSON attributes and status fields using `-o jsonpath`
+> - Format and sort tabular output with custom columns and `--sort-by`
+> - Filter cluster resources with precision using equality and set-based label selectors (`-l`)
 
 ---
 
@@ -57,13 +62,13 @@ kubectl get pods --show-labels
 ```mermaid
 graph LR
     subgraph "All Pods"
-        P1["web-1\napp=nginx\nenv=prod"]
-        P2["web-2\napp=nginx\nenv=prod"]
-        P3["api-1\napp=api\nenv=prod"]
-        P4["web-dev\napp=nginx\nenv=dev"]
+        P1["web-1<br/>app=nginx<br/>env=prod"]
+        P2["web-2<br/>app=nginx<br/>env=prod"]
+        P3["api-1<br/>app=api<br/>env=prod"]
+        P4["web-dev<br/>app=nginx<br/>env=dev"]
     end
 
-    Q["kubectl get pods\n-l app=nginx,env=prod"] -->|matches| P1 & P2
+    Q["kubectl get pods<br/>-l app=nginx,env=prod"] -->|matches| P1 & P2
 ```
 
 > 🔗 **Docker Parallel:** Docker Compose has `labels:` on services too, but they're mostly cosmetic. In Kubernetes, labels are fundamental — Services and Deployments use label selectors to know which pods they own.

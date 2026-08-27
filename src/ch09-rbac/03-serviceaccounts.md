@@ -1,8 +1,13 @@
 # 9.3 ServiceAccounts — Pod Identities
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** A ServiceAccount is a non-human identity for pods. When a pod needs to call the Kubernetes API (e.g., a CI runner listing pods, or an operator watching CRDs), it authenticates using its ServiceAccount's token. By default, every pod gets the `default` ServiceAccount, which has almost no permissions.
+
+> **After this section you will be able to:**
+> - Provision dedicated ServiceAccount identities for in-cluster applications and automation agents
+> - Manage projected ServiceAccount tokens and API authentication securely
+> - Enforce least-privilege RBAC policies on workload service accounts
 
 ---
 

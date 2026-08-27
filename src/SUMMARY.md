@@ -1,33 +1,34 @@
 # Summary
 
 [Introduction](./introduction.md)
+[⚡ Quick Wins](./quick-wins.md)
 
 ---
 
 # Part I: Foundations
 
-- [Chapter 1: The Container Orchestration Problem](./ch01-why-kubernetes/README.md)
+- [Chapter 1: The Container Orchestration Problem](./ch01-why-kubernetes/index.md)
   - [1.1 From Docker to Orchestration — Why Compose Isn't Enough](./ch01-why-kubernetes/01-docker-to-orchestration.md)
   - [1.2 Kubernetes Architecture — The 10,000ft View](./ch01-why-kubernetes/02-architecture-overview.md)
   - [1.3 Control Plane Deep Dive](./ch01-why-kubernetes/03-control-plane.md)
   - [1.4 Worker Nodes and the Kubelet](./ch01-why-kubernetes/04-worker-nodes.md)
   - [1.5 Lab: Your First Cluster — Minikube Setup & Exploration](./ch01-why-kubernetes/05-lab-first-cluster.md)
 
-- [Chapter 2: kubectl — Your Swiss Army Knife](./ch02-kubectl/README.md)
+- [Chapter 2: kubectl — Your Swiss Army Knife](./ch02-kubectl/index.md)
   - [2.1 Anatomy of a kubectl Command](./ch02-kubectl/01-anatomy.md)
   - [2.2 Imperative vs Declarative — Two Ways to Talk to K8s](./ch02-kubectl/02-imperative-vs-declarative.md)
   - [2.3 Context, Namespaces, and kubeconfig](./ch02-kubectl/03-context-namespaces.md)
   - [2.4 Output Formatting, Filtering, and JSONPath](./ch02-kubectl/04-output-filtering.md)
   - [2.5 Lab: kubectl Power User Drills](./ch02-kubectl/05-lab-kubectl-drills.md)
 
-- [Chapter 3: Pods — The Atomic Unit](./ch03-pods/README.md)
+- [Chapter 3: Pods — The Atomic Unit](./ch03-pods/index.md)
   - [3.1 What Is a Pod, Really?](./ch03-pods/01-what-is-a-pod.md)
   - [3.2 Pod Lifecycle and Phases](./ch03-pods/02-lifecycle.md)
   - [3.3 Multi-Container Pods: Sidecars, Init, and Ambassadors](./ch03-pods/03-multi-container.md)
   - [3.4 Resource Requests and Limits](./ch03-pods/04-resources.md)
   - [3.5 Lab: Run, Inspect, Break, and Debug Pods](./ch03-pods/05-lab-pods.md)
 
-- [Chapter 4: Workload Controllers](./ch04-workloads/README.md)
+- [Chapter 4: Workload Controllers](./ch04-workloads/index.md)
   - [4.1 ReplicaSets — Desired State and Self-Healing](./ch04-workloads/01-replicasets.md)
   - [4.2 Deployments — Rolling Updates, Rollbacks, and Strategy](./ch04-workloads/02-deployments.md)
   - [4.3 DaemonSets — One Per Node](./ch04-workloads/03-daemonsets.md)
@@ -39,28 +40,29 @@
 
 # Part II: Networking & Configuration
 
-- [Chapter 5: Services — Exposing Your Applications](./ch05-services/README.md)
+- [Chapter 5: Services — Exposing Your Applications](./ch05-services/index.md)
   - [5.1 ClusterIP — Internal Communication](./ch05-services/01-clusterip.md)
   - [5.2 NodePort — Exposing to the Outside](./ch05-services/02-nodeport.md)
   - [5.3 LoadBalancer — Cloud-Native Exposure](./ch05-services/03-loadbalancer.md)
   - [5.4 Headless Services and DNS](./ch05-services/04-headless-dns.md)
   - [5.5 Lab: Service Discovery and Connectivity Debugging](./ch05-services/05-lab-services.md)
 
-- [Chapter 6: Ingress — HTTP Routing](./ch06-ingress/README.md)
+- [Chapter 6: Ingress & Gateway API](./ch06-ingress/index.md)
   - [6.1 Ingress Controllers and Resources](./ch06-ingress/01-ingress-basics.md)
   - [6.2 Setting Up NGINX Ingress on Minikube](./ch06-ingress/02-nginx-ingress-setup.md)
   - [6.3 Path-Based and Host-Based Routing](./ch06-ingress/03-routing-rules.md)
   - [6.4 TLS Termination](./ch06-ingress/04-tls.md)
-  - [6.5 Lab: Multi-Service Ingress with TLS](./ch06-ingress/05-lab-ingress.md)
+  - [6.5 The Kubernetes Gateway API](./ch06-ingress/05-gateway-api.md)
+  - [6.6 Lab: Multi-Service Ingress with TLS](./ch06-ingress/06-lab-ingress.md)
 
-- [Chapter 7: ConfigMaps and Secrets](./ch07-configuration/README.md)
+- [Chapter 7: ConfigMaps and Secrets](./ch07-configuration/index.md)
   - [7.1 ConfigMaps — Externalizing Configuration](./ch07-configuration/01-configmaps.md)
   - [7.2 Secrets — Handling Sensitive Data](./ch07-configuration/02-secrets.md)
   - [7.3 Environment Variables vs Volume Mounts](./ch07-configuration/03-env-vs-volumes.md)
   - [7.4 Immutable ConfigMaps and Secret Rotation](./ch07-configuration/04-immutable-rotation.md)
   - [7.5 Lab: Configure a 12-Factor App](./ch07-configuration/05-lab-configuration.md)
 
-- [Chapter 8: Storage — Persistent Data in K8s](./ch08-storage/README.md)
+- [Chapter 8: Storage — Persistent Data in K8s](./ch08-storage/index.md)
   - [8.1 Volume Types — Ephemeral to Persistent](./ch08-storage/01-volume-types.md)
   - [8.2 PersistentVolumes and PersistentVolumeClaims](./ch08-storage/02-pv-pvc.md)
   - [8.3 StorageClasses and Dynamic Provisioning](./ch08-storage/03-storageclasses.md)
@@ -71,14 +73,14 @@
 
 # Part III: Production Concerns
 
-- [Chapter 9: Namespaces, RBAC, and Multi-Tenancy](./ch09-rbac/README.md)
+- [Chapter 9: Namespaces, RBAC, and Multi-Tenancy](./ch09-rbac/index.md)
   - [9.1 Namespaces — Cluster Partitioning](./ch09-rbac/01-namespaces.md)
   - [9.2 RBAC — Roles, ClusterRoles, and Bindings](./ch09-rbac/02-rbac.md)
   - [9.3 ServiceAccounts — Pod Identities](./ch09-rbac/03-serviceaccounts.md)
   - [9.4 Multi-Tenancy Patterns](./ch09-rbac/04-multi-tenancy.md)
   - [9.5 Lab: Lock Down a Namespace](./ch09-rbac/05-lab-rbac.md)
 
-- [Chapter 10: Health Checks and Graceful Shutdown](./ch10-health/README.md)
+- [Chapter 10: Health Checks and Graceful Shutdown](./ch10-health/index.md)
   - [10.1 Why Probes Exist — The Problem They Solve](./ch10-health/01-why-probes.md)
   - [10.2 Liveness Probes — Restart the Stuck](./ch10-health/02-liveness.md)
   - [10.3 Readiness Probes — Control Traffic](./ch10-health/03-readiness.md)
@@ -86,7 +88,7 @@
   - [10.5 Graceful Shutdown and preStop Hooks](./ch10-health/05-graceful-shutdown.md)
   - [10.6 Lab: Probes and Shutdown Drills](./ch10-health/06-lab-health.md)
 
-- [Chapter 11: Resource Management and Autoscaling](./ch11-resources/README.md)
+- [Chapter 11: Resource Management and Autoscaling](./ch11-resources/index.md)
   - [11.1 Requests and Limits — The Fundamentals](./ch11-resources/01-requests-limits.md)
   - [11.2 QoS Classes and Pod Eviction](./ch11-resources/02-qos-eviction.md)
   - [11.3 Horizontal Pod Autoscaler (HPA)](./ch11-resources/03-hpa.md)
@@ -98,29 +100,30 @@
 
 # Part IV: Advanced Operations
 
-- [Chapter 12: Helm — Package Management](./ch12-helm/README.md)
+- [Chapter 12: Helm & Kustomize](./ch12-helm/index.md)
   - [12.1 What Helm Is and Why It Exists](./ch12-helm/01-what-is-helm.md)
   - [12.2 Installing Charts — helm install and Repositories](./ch12-helm/02-installing-charts.md)
   - [12.3 Chart Anatomy — Templates and Values](./ch12-helm/03-chart-anatomy.md)
   - [12.4 Creating Your Own Chart](./ch12-helm/04-creating-charts.md)
   - [12.5 Upgrades, Rollbacks, and Release Management](./ch12-helm/05-upgrades-rollbacks.md)
-  - [12.6 Lab: Package and Deploy a Multi-Tier App](./ch12-helm/06-lab-helm.md)
+  - [12.6 Kustomize — Template-Free Configuration](./ch12-helm/06-kustomize.md)
+  - [12.7 Lab: Package and Deploy a Multi-Tier App](./ch12-helm/07-lab-helm.md)
 
-- [Chapter 13: Observability — Logging, Metrics, and Tracing](./ch13-observability/README.md)
+- [Chapter 13: Observability — Logging, Metrics, and Tracing](./ch13-observability/index.md)
   - [13.1 The Three Pillars of Observability](./ch13-observability/01-three-pillars.md)
   - [13.2 Logging — kubectl logs, Stern, and Aggregation](./ch13-observability/02-logging.md)
   - [13.3 Metrics — Prometheus and metrics-server](./ch13-observability/03-metrics.md)
   - [13.4 Dashboards with Grafana](./ch13-observability/04-grafana.md)
   - [13.5 Lab: Full Observability Stack on Minikube](./ch13-observability/05-lab-observability.md)
 
-- [Chapter 14: Scheduling and Placement](./ch14-scheduling/README.md)
+- [Chapter 14: Scheduling and Placement](./ch14-scheduling/index.md)
   - [14.1 The Kubernetes Scheduler](./ch14-scheduling/01-scheduler.md)
   - [14.2 Node Affinity and Node Selectors](./ch14-scheduling/02-node-affinity.md)
   - [14.3 Taints and Tolerations](./ch14-scheduling/03-taints-tolerations.md)
   - [14.4 Pod Affinity and Anti-Affinity](./ch14-scheduling/04-pod-affinity.md)
   - [14.5 Lab: Control Where Pods Land](./ch14-scheduling/05-lab-scheduling.md)
 
-- [Chapter 15: Security Hardening](./ch15-security/README.md)
+- [Chapter 15: Security Hardening](./ch15-security/index.md)
   - [15.1 Pod Security Standards and Admission](./ch15-security/01-pod-security-standards.md)
   - [15.2 Network Policies — Microsegmentation](./ch15-security/02-network-policies.md)
   - [15.3 Secrets Management — Encryption and External Vaults](./ch15-security/03-secrets-management.md)
@@ -131,7 +134,7 @@
 
 # Part V: CI/CD & GitOps
 
-- [Chapter 16: CI/CD and GitOps](./ch16-cicd/README.md)
+- [Chapter 16: CI/CD and GitOps](./ch16-cicd/index.md)
   - [16.1 GitOps Principles](./ch16-cicd/01-gitops-principles.md)
   - [16.2 Container Image CI Pipeline](./ch16-cicd/02-image-ci.md)
   - [16.3 Kubernetes Manifest Validation in CI](./ch16-cicd/03-manifest-validation.md)
@@ -142,19 +145,21 @@
 
 # Part VI: Internals & Troubleshooting
 
-- [Chapter 17: Kubernetes Internals](./ch17-internals/README.md)
+- [Chapter 17: Kubernetes Internals](./ch17-internals/index.md)
   - [17.1 How a Pod Gets Created — The Full Journey](./ch17-internals/01-pod-creation-journey.md)
   - [17.2 etcd — The Cluster Brain](./ch17-internals/02-etcd.md)
   - [17.3 Container Runtimes and the CRI](./ch17-internals/03-container-runtimes.md)
   - [17.4 CNI — Container Network Interface](./ch17-internals/04-cni.md)
   - [17.5 CSI — Container Storage Interface](./ch17-internals/05-csi.md)
+  - [17.6 Lab: Tracing a Pod's Journey Through the Cluster](./ch17-internals/06-lab.md)
 
-- [Chapter 18: Troubleshooting Playbook](./ch18-troubleshooting/README.md)
+- [Chapter 18: Troubleshooting Playbook](./ch18-troubleshooting/index.md)
   - [18.1 The Debugging Mental Model](./ch18-troubleshooting/01-mental-model.md)
   - [18.2 Pod Failures — CrashLoopBackOff, ImagePullBackOff, OOMKilled](./ch18-troubleshooting/02-pod-failures.md)
   - [18.3 Networking Failures — DNS, Services, Connectivity](./ch18-troubleshooting/03-network-failures.md)
   - [18.4 Storage and Permission Issues](./ch18-troubleshooting/04-storage-issues.md)
   - [18.5 The Troubleshooting Cheat Sheet](./ch18-troubleshooting/05-cheat-sheet.md)
+  - [18.6 Lab: The Kubernetes Debugging Gauntlet](./ch18-troubleshooting/06-lab.md)
 
 ---
 
@@ -162,3 +167,4 @@
 [Appendix B: kubectl Cheat Sheet](./appendix-b-kubectl-cheatsheet.md)
 [Appendix C: Common K8s Error Reference](./appendix-c-error-reference.md)
 [Appendix D: Resource Manifests Reference](./appendix-d-manifests.md)
+[Appendix E: Master Concept Map](./appendix-e-concept-map.md)

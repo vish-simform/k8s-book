@@ -1,8 +1,13 @@
 # 4.5 Jobs and CronJobs — Run-to-Completion Workloads
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** Jobs run a task to completion (exit 0) and then stop. CronJobs run Jobs on a schedule. Use them for database backups, data processing, report generation — anything that has a start and end.
+
+> **After this section you will be able to:**
+> - Deploy batch workloads using Jobs with completions, parallelism, and backoff limits
+> - Schedule recurring cron tasks with CronJobs using standard 5-field cron syntax
+> - Handle job concurrency policies (`Allow`, `Forbid`, `Replace`) and history limits
 
 ---
 
@@ -61,14 +66,14 @@ spec:
 
 ```mermaid
 graph LR
-    J[Job\ncompletions:10\nparallelism:3]
+    J[Job<br/>completions:10<br/>parallelism:3]
     J --> P1[Pod 1 ✅]
     J --> P2[Pod 2 ✅]
     J --> P3[Pod 3 ✅]
     P1 --> P4[Pod 4 ✅]
     P2 --> P5[Pod 5 ✅]
     P3 --> P6[Pod 6 ✅]
-    P4 & P5 & P6 --> DONE[Job Complete\n6 of 10... continues]
+    P4 & P5 & P6 --> DONE[Job Complete<br/>6 of 10... continues]
 ```
 
 ---

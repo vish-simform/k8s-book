@@ -1,8 +1,13 @@
 # 4.4 StatefulSets — When Identity Matters
 
-⏱️ **~6 min read**
+⏱️ **6 min read · 8 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** StatefulSets are for applications that need **stable network identity** and **stable storage** — databases, message queues, consensus systems. Each pod gets a persistent name (`pod-0`, `pod-1`) and its own PersistentVolumeClaim that follows it across restarts.
+
+> **After this section you will be able to:**
+> - Explain why stateful applications require stable network identifiers and dedicated persistent storage
+> - Structure `volumeClaimTemplates` to provision independent PVs per replica automatically
+> - Manage ordered startup, scaling, and rolling updates for distributed databases
 
 ---
 
@@ -69,10 +74,10 @@ The `volumeClaimTemplates` section automatically creates a separate PVC for each
 ```mermaid
 graph TB
     subgraph "StatefulSet Guarantees"
-        G1["1. Stable Pod Names\nmongo-0, mongo-1, mongo-2\n(not random hashes)"]
-        G2["2. Stable Network Identity\nmongo-0.mongo.default.svc.cluster.local\n(predictable DNS)"]
-        G3["3. Stable Storage\nEach pod keeps its own PVC\nacross restarts and reschedules"]
-        G4["4. Ordered Operations\nStart: 0 → 1 → 2\nTerminate: 2 → 1 → 0"]
+        G1["1. Stable Pod Names<br/>mongo-0, mongo-1, mongo-2<br/>(not random hashes)"]
+        G2["2. Stable Network Identity<br/>mongo-0.mongo.default.svc.cluster.local<br/>(predictable DNS)"]
+        G3["3. Stable Storage<br/>Each pod keeps its own PVC<br/>across restarts and reschedules"]
+        G4["4. Ordered Operations<br/>Start: 0 → 1 → 2<br/>Terminate: 2 → 1 → 0"]
     end
 ```
 

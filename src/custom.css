@@ -1,13 +1,20 @@
-/* ============================================================
-   Kubernetes: From Zero to Production — Custom Styles
-   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+body { font-family: var(--font-body); line-height: 1.75; }
 
 /* Better code block readability */
 code {
+  font-family: var(--font-mono);
   font-size: 0.9em;
 }
 
 pre code {
+  font-family: var(--font-mono);
   font-size: 0.88em;
   line-height: 1.6;
 }
@@ -337,4 +344,97 @@ hr {
   visibility: visible !important;
   margin: auto;
 }
+
+/* ---- Distinct Callout Boxes ---- */
+.callout {
+  padding: 1em 1em 1em 3.2em;
+  margin: 1.2em 0;
+  border-radius: 0 8px 8px 0;
+  position: relative;
+  line-height: 1.6;
+}
+.callout::before {
+  position: absolute;
+  left: 0.7em;
+  top: 0.85em;
+  font-size: 1.3em;
+}
+
+.callout-tip {
+  border-left: 4px solid #10b981;
+  background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(16,185,129,0.02));
+}
+.callout-tip::before { content: "💡"; }
+
+.callout-warning {
+  border-left: 4px solid #f59e0b;
+  background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(245,158,11,0.02));
+}
+.callout-warning::before { content: "⚠️"; }
+
+.callout-danger {
+  border-left: 4px solid #ef4444;
+  background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(239,68,68,0.02));
+}
+.callout-danger::before { content: "🔥"; }
+
+.callout-docker {
+  border-left: 4px solid #2496ed;
+  background: linear-gradient(135deg, rgba(36,150,237,0.08), rgba(36,150,237,0.02));
+}
+.callout-docker::before { content: "🐳"; }
+
+.callout-production {
+  border-left: 4px solid #8b5cf6;
+  background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(139,92,246,0.02));
+}
+.callout-production::before { content: "🏭"; }
+
+/* ---- Reading Progress Bar ---- */
+#reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  z-index: 99999;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* ---- Back to Top Button ---- */
+#back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.9);
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: opacity 0.2s, transform 0.2s;
+}
+#back-to-top:hover {
+  transform: scale(1.1);
+  background: rgba(59, 130, 246, 1);
+}
+
+/* ---- Part Color Coding in Sidebar ---- */
+.part-title { font-weight: 700; letter-spacing: 0.03em; }
+
+li.part-title:nth-of-type(1) { color: #3b82f6; }  /* I: Foundations — Blue */
+li.part-title:nth-of-type(2) { color: #10b981; }  /* II: Networking & Config — Green */
+li.part-title:nth-of-type(3) { color: #f59e0b; }  /* III: Production — Orange */
+li.part-title:nth-of-type(4) { color: #8b5cf6; }  /* IV: Advanced Ops — Purple */
+li.part-title:nth-of-type(5) { color: #ef4444; }  /* V: CI/CD — Red */
+li.part-title:nth-of-type(6) { color: #64748b; }  /* VI: Internals & Debug — Gray */
 

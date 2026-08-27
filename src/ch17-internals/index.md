@@ -1,6 +1,6 @@
 # Chapter 17: Kubernetes Internals
 
-⏱️ **Total chapter time: ~75 min** (45 min reading + 30 min exploration)
+⏱️ **Total chapter time: ~70 min** (45 min reading + 25 min lab)
 
 > **After this chapter, you will be able to:** Explain exactly what happens inside Kubernetes when you run `kubectl apply`, understand how etcd, the CRI, CNI, and CSI fit together, and read cluster events with a mental model of the full control-plane lifecycle.
 
@@ -10,11 +10,12 @@
 
 | Section | Topic | Time |
 |---|---|---|
-| 17.1 | How a Pod Gets Created — The Full Journey | ~15 min |
-| 17.2 | etcd — The Cluster Brain | ~8 min |
-| 17.3 | Container Runtimes and the CRI | ~8 min |
-| 17.4 | CNI — Container Network Interface | ~8 min |
-| 17.5 | CSI — Container Storage Interface | ~6 min |
+| 17.1 | [How a Pod Gets Created — The Full Journey](./01-pod-creation-journey.md) | ~15 min |
+| 17.2 | [etcd — The Cluster Brain](./02-etcd.md) | ~8 min |
+| 17.3 | [Container Runtimes and the CRI](./03-container-runtimes.md) | ~8 min |
+| 17.4 | [CNI — Container Network Interface](./04-cni.md) | ~8 min |
+| 17.5 | [CSI — Container Storage Interface](./05-csi.md) | ~6 min |
+| 17.6 | [Lab: Tracing a Pod's Journey Through the Cluster](./06-lab.md) | ~25 min |
 
 ## Prerequisites
 

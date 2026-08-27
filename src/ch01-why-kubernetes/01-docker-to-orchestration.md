@@ -1,8 +1,13 @@
 # 1.1 From Docker to Orchestration — Why Compose Isn't Enough
 
-⏱️ **~8 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟢 Beginner
 
 > **TL;DR:** Docker Compose is a great local tool, but it breaks down the moment you need resilience, scaling, or multi-host deployments. Kubernetes solves all of that — systematically.
+
+> **After this section you will be able to:**
+> - Identify the 5 critical production failure points when scaling with Docker Compose
+> - Contrast imperative container management with declarative desired state
+> - Describe how Kubernetes reconciliation loops maintain workload availability
 
 ---
 
@@ -76,13 +81,13 @@ Kubernetes is what happens when you solve all five walls systematically.
 ```mermaid
 graph LR
     subgraph "Docker Compose World"
-        DC[Your Laptop\nor Single VM]
+        DC[Your Laptop<br/>or Single VM]
         DC --> C1[container 1]
         DC --> C2[container 2]
     end
 
     subgraph "Kubernetes World"
-        CP[Control Plane\nK8s Brain]
+        CP[Control Plane<br/>K8s Brain]
         N1[Node 1]
         N2[Node 2]
         N3[Node 3]
@@ -119,10 +124,10 @@ In Kubernetes, you write a declaration: "I want 5 instances of this app running 
 
 ```mermaid
 graph LR
-    Y[You write YAML:\n'I want 5 replicas'] --> K[Kubernetes API]
-    K --> CM[Controller Manager\nconstantly watches]
-    CM -->|"Reality: 5 pods running\n✅ Nothing to do"| OK[All good]
-    CM -->|"Reality: 3 pods running\n❌ 2 missing"| FIX[Create 2 new pods]
+    Y[You write YAML:<br/>'I want 5 replicas'] --> K[Kubernetes API]
+    K --> CM[Controller Manager<br/>constantly watches]
+    CM -->|"Reality: 5 pods running<br/>✅ Nothing to do"| OK[All good]
+    CM -->|"Reality: 3 pods running<br/>❌ 2 missing"| FIX[Create 2 new pods]
 ```
 
 This is called the **reconciliation loop** — or more precisely, the **control loop**. It runs constantly, forever, for every resource in your cluster.

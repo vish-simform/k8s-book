@@ -1,8 +1,13 @@
 # 7.2 Secrets — Handling Sensitive Data
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** Secrets store sensitive data (passwords, tokens, keys). They look like ConfigMaps but are base64-encoded and have stricter access controls. **Important:** base64 is NOT encryption. Secrets are only as secure as your RBAC and etcd encryption configuration.
+
+> **After this section you will be able to:**
+> - Store and manage sensitive credentials, tokens, and SSH keys using Kubernetes Secrets
+> - Understand base64 encoding vs encryption-at-rest in etcd
+> - Mount Secrets securely into pods with restricted file permissions
 
 ---
 

@@ -1,8 +1,17 @@
 # 18.1 The Debugging Mental Model
 
-⏱️ **~8 min read**
+⏱️ **6 min read · 6 min hands-on** · 🔴 Advanced
+
+> 📡 **Scenario:** A high-severity production outage alert wakes you up: the payment gateway service is returning HTTP 502 to all users. Panic sets in as team members randomly guess whether it's DNS, ingress, CPU limits, or code crashes.
+>
+> *After this section, you'll be able to isolate and resolve any Kubernetes outage systematically in under 10 minutes using a 3-layer diagnostic model.*
 
 > **TL;DR:** Kubernetes debugging is systematic, not random. Follow a three-layer model: **Is the pod running? Is the network reachable? Is the data accessible?** Answer each layer in order before jumping to the next.
+
+> **After this section you will be able to:**
+> - Apply the 3-layer debugging framework (Pod level → Network level → Storage/Config level)
+> - Execute universal diagnostic commands (`get`, `describe`, `logs`, `events`) in the correct sequence
+> - Isolate failure domains quickly without guessing or making random destructive changes
 
 ---
 

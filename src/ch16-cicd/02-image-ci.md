@@ -1,8 +1,13 @@
 # 16.2 Container Image CI Pipeline
 
-⏱️ **~8 min read**
+⏱️ **6 min read · 7 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** A solid container image CI pipeline has five stages: **Test** (unit + integration tests), **Build** (multi-stage Docker build), **Scan** (Trivy for CVEs), **Push** (to registry with immutable tag), and **Update** (bump the image tag in the config repo to trigger GitOps CD). The tag should always be the git commit SHA — never `latest`.
+
+> **After this section you will be able to:**
+> - Build multi-stage production Dockerfiles optimized for minimal attack surface and size
+> - Automate container image builds, vulnerability scans, and registry pushes in CI
+> - Generate immutable git commit SHA tags and update manifest repositories automatically
 
 ---
 
@@ -26,15 +31,18 @@ With `latest` you can't tell which code version is running in production, can't 
 
 ```mermaid
 graph LR
-    A["1️⃣ Test\nunit tests\nintegration tests\nlint"] --> B["2️⃣ Build\nmulti-stage\nDockerfile"]
-    B --> C["3️⃣ Scan\ntrivy image\n--severity CRITICAL\n--exit-code 1"]
-    C --> D["4️⃣ Push\nregistry.io/app:SHA\n+ semver tag if release"]
-    D --> E["5️⃣ Update Config\nbump image tag\nin config-repo\n(triggers ArgoCD)"]
+    A["1️⃣ Test<br/>unit tests<br/>integration tests<br/>lint"] --> B["2️⃣ Build<br/>multi-stage<br/>Dockerfile"]
+    B --> C["3️⃣ Scan<br/>trivy image<br/>--severity CRITICAL<br/>--exit-code 1"]
+    C --> D["4️⃣ Push<br/>registry.io/app:SHA<br/>+ semver tag if release"]
+    D --> E["5️⃣ Update Config<br/>bump image tag<br/>in config-repo<br/>(triggers ArgoCD)"]
 ```
 
 ---
 
 ## Complete GitHub Actions Workflow
+
+<details>
+<summary>📦 <b>Full Production GitHub Actions Workflow (click to expand)</b></summary>
 
 ```yaml
 # .github/workflows/ci.yaml
@@ -48,7 +56,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}   # e.g., myorg/my-app
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   # ─── Stage 1: Test ────────────────────────────────────
@@ -68,31 +76,23 @@ jobs:
       run: pip install -r requirements.txt -r requirements-dev.txt
 
     - name: Run tests
-      run: pytest --cov=src --cov-report=xml -v
+      run: pytest --cov=app --cov-report=xml
 
-    - name: Upload coverage
-      uses: codecov/codecov-action@v4
-
-  # ─── Stage 2 + 3: Build & Scan ────────────────────────
-  build-and-scan:
-    name: Build and Scan Image
-    runs-on: ubuntu-latest
+  # ─── Stage 2: Build ───────────────────────────────────
+  build:
+    name: Build & Scan Container Image
     needs: test
-    permissions:
-      contents: read
-      packages: write
-      security-events: write
+    runs-on: ubuntu-latest
     outputs:
-      image-digest: ${{ steps.build.outputs.digest }}
       image-tag: ${{ steps.meta.outputs.tags }}
+      image-digest: ${{ steps.build.outputs.digest }}
     steps:
     - uses: actions/checkout@v4
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Log in to GHCR
-      if: github.event_name == 'push'
+    - name: Log in to GitHub Container Registry
       uses: docker/login-action@v3
       with:
         registry: ${{ env.REGISTRY }}
@@ -105,83 +105,61 @@ jobs:
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
         tags: |
-          type=sha,prefix=sha-,format=short        # sha-a3f8c1d
-          type=semver,pattern={{version}}           # v1.2.3 (on git tags)
-          type=semver,pattern={{major}}.{{minor}}   # v1.2
+          type=sha,prefix=sha-,format=short
+          type=ref,event=branch
+          type=semver,pattern={{version}}
 
-    - name: Build (and push only on main branch)
+    # ─── Stage 3: Scan with Trivy (before pushing) ────
+    - name: Build image locally for scanning
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        load: true
+        tags: local-test:${{ github.sha }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Scan with Trivy for CRITICAL CVEs
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: local-test:${{ github.sha }}
+        format: table
+        exit-code: 1          # Fail the build if CRITICAL CVE found
+        ignore-unfixed: true   # Only fail for CVEs that have a fix available
+        severity: CRITICAL,HIGH
+
+    # ─── Stage 4: Push to Registry ─────────────────────
+    - name: Build and push to registry
       id: build
       uses: docker/build-push-action@v5
       with:
         context: .
-        push: ${{ github.event_name == 'push' }}
+        push: ${{ github.ref == 'refs/heads/main' }}  # Only push on main branch
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-        cache-from: type=gha          # GitHub Actions cache for layers
+        cache-from: type=gha
         cache-to: type=gha,mode=max
-        # Build locally first (no push) on PRs to get an image to scan:
-        load: ${{ github.event_name == 'pull_request' }}
 
-    - name: Scan image with Trivy
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
-        format: sarif
-        output: trivy-results.sarif
-        severity: CRITICAL,HIGH
-        exit-code: "1"          # Fail pipeline on CRITICAL CVEs
-
-    - name: Upload Trivy results to GitHub Security tab
-      uses: github/codeql-action/upload-sarif@v3
-      if: always()
-      with:
-        sarif_file: trivy-results.sarif
-
-  # ─── Stage 4: Sign Image ──────────────────────────────
-  sign:
-    name: Sign Image with Cosign
+  # ─── Stage 5: Update Config Repo (GitOps Trigger) ────
+  update-manifest:
+    name: Update GitOps Config Repository
+    needs: build
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    needs: build-and-scan
-    if: github.event_name == 'push'
-    permissions:
-      contents: read
-      packages: write
-      id-token: write            # Required for keyless OIDC signing
     steps:
-    - name: Install Cosign
-      uses: sigstore/cosign-installer@v3
-
-    - name: Log in to GHCR
-      uses: docker/login-action@v3
-      with:
-        registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Sign image (keyless, using GitHub OIDC)
-      run: |
-        cosign sign --yes \
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ needs.build-and-scan.outputs.image-digest }}
-
-  # ─── Stage 5: Update Config Repo ──────────────────────
-  update-config:
-    name: Update Image Tag in Config Repo
-    runs-on: ubuntu-latest
-    needs: [build-and-scan, sign]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    steps:
-    - name: Checkout config repo
+    - name: Check out config repository
       uses: actions/checkout@v4
       with:
-        repository: myorg/k8s-config          # The GitOps config repo
-        token: ${{ secrets.CONFIG_REPO_TOKEN }}
+        repository: myorg/k8s-manifests    # The GitOps repo
+        token: ${{ secrets.GITOPS_REPO_PAT }}
+        path: config-repo
 
-    - name: Update image tag
+    - name: Update image tag with Kustomize
+      working-directory: config-repo/apps/my-app/overlays/production
       run: |
         NEW_TAG="sha-$(echo ${{ github.sha }} | cut -c1-7)"
         
-        # For Kustomize-based config:
-        cd overlays/production
+        # Using Kustomize (recommended):
         kustomize edit set image \
           ghcr.io/myorg/my-app=ghcr.io/myorg/my-app:${NEW_TAG}
         
@@ -191,6 +169,7 @@ jobs:
 
     - name: Commit and push
       run: |
+        cd config-repo
         git config user.name "ci-bot"
         git config user.email "ci-bot@example.com"
         git add .
@@ -202,6 +181,8 @@ jobs:
           Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         git push
 ```
+
+</details>
 
 ---
 

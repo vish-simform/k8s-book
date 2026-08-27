@@ -1,8 +1,13 @@
 # 16.3 Kubernetes Manifest Validation in CI
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 6 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** Validating Kubernetes manifests in CI catches broken YAML, schema violations, security misconfigurations, and policy violations **before they reach the cluster** — where they'd cause failed deployments or runtime security issues. The three layers: **syntax** (`kubectl --dry-run`), **schema** (`kubeconform`), and **policy** (Kyverno CLI or OPA conftest).
+
+> **After this section you will be able to:**
+> - Implement three-tier CI validation: syntax checking, schema validation (`kubeconform`), and policy linting
+> - Enforce organizational standards and best practices before code reaches cluster environments
+> - Prevent broken YAML and misconfigurations from ever entering the deployment pipeline
 
 ---
 
@@ -125,6 +130,7 @@ spec:
                     cpu: "?*"
                     memory: "?*"
 ---
+
 # policies/no-latest-tag.yaml
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
@@ -147,6 +153,7 @@ spec:
           containers:
           - image: "!*:latest"
 ---
+
 # policies/require-labels.yaml
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
@@ -215,6 +222,9 @@ warn[msg] {
 
 ## Complete CI Validation Job (GitHub Actions)
 
+<details>
+<summary>⚙️ <b>Full CI Manifest Validation Pipeline (click to expand)</b></summary>
+
 ```yaml
 # .github/workflows/validate-manifests.yaml
 name: Validate Kubernetes Manifests
@@ -271,6 +281,8 @@ jobs:
         helm template my-app ./helm/my-app/ --values helm/my-app/values-prod.yaml | \
           kubeconform -summary -kubernetes-version 1.29.0 -
 ```
+
+</details>
 
 ---
 

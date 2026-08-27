@@ -1,8 +1,13 @@
 # 14.2 Node Affinity and Node Selectors
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 6 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** **Node Selectors** are the simple, legacy way to pin pods to nodes with matching labels (`key: value`). **Node Affinity** is the modern replacement — it supports `In`, `NotIn`, `Exists`, `Gt`/`Lt` operators, and crucially, a `preferred` (soft) mode that lets the scheduler fall back to other nodes if the preferred ones are unavailable.
+
+> **After this section you will be able to:**
+> - Label nodes and target workloads with `nodeSelector` and expressive `nodeAffinity` rules
+> - Differentiate hard requirements (`requiredDuringSchedulingIgnoredDuringExecution`) from soft preferences (`preferredDuringScheduling...`)
+> - Target specific hardware topologies (GPUs, SSDs, zones) declaratively
 
 ---
 

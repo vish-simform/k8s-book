@@ -1,8 +1,13 @@
 # 3.2 Pod Lifecycle and Phases
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟢 Beginner
 
 > **TL;DR:** A pod moves through phases: `Pending → Running → Succeeded/Failed`. Each container inside has its own state too. Understanding both levels is how you debug 80% of pod problems.
+
+> **After this section you will be able to:**
+> - Trace the 5 Pod lifecycle phases (`Pending`, `Running`, `Succeeded`, `Failed`, `Unknown`)
+> - Diagnose common container waiting states including `CrashLoopBackOff` and `ImagePullBackOff`
+> - Configure pod `restartPolicy` settings correctly for long-running services vs. batch workloads
 
 ---
 

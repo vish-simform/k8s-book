@@ -1,8 +1,13 @@
 # 18.5 The Troubleshooting Cheat Sheet
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 4 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** This is the single-page reference you'll return to every time something breaks in Kubernetes. Bookmark it.
+
+> **After this section you will be able to:**
+> - Quickly look up universal one-liner diagnostic commands for rapid incident triage
+> - Reference exit codes and failure fingerprints during active production debugging
+> - Navigate common Kubernetes error messages and their verified resolution steps
 
 ---
 
@@ -127,7 +132,7 @@ minikube ssh; sudo journalctl -u kubelet -f    # kubelet logs
 kubectl exec -it <pod> -- /bin/sh
 
 # Inject a debug container (K8s 1.23+)
-kubectl debug -it <pod> --image=nicolaka/netshoot --target=<container>
+kubectl debug -it <pod> --image=nicolaka/netshoot:v0.13 --target=<container>
 
 # Copy a crashing pod and add a debug container
 kubectl debug <pod> -it --copy-to=debug-pod --image=busybox:1.36
@@ -210,5 +215,5 @@ For those scenarios, you need access to the control plane — which in managed K
 | 1 | Events first, always | `kubectl describe` Events tell you *what* K8s tried and *why* it failed |
 | 2 | `--previous` for crash logs | Normal `logs` shows current (empty if crashed); `--previous` shows last run |
 | 3 | Labels are the root of most bugs | 80% of service connectivity bugs = selector doesn't match pod labels |
-| 4 | Debug pod is your Swiss Army knife | `nicolaka/netshoot` gives you every network tool you need |
+| 4 | Debug pod is your Swiss Army knife | `nicolaka/netshoot:v0.13` gives you every network tool you need |
 | 5 | Most bugs are in the app, not K8s | After ruling out infrastructure, check your code and config |

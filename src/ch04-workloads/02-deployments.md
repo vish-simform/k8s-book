@@ -1,8 +1,13 @@
 # 4.2 Deployments — Rolling Updates, Rollbacks, and Strategy
 
-⏱️ **~8 min read**
+⏱️ **6 min read · 8 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** Deployments are how you deploy everything in Kubernetes. They manage ReplicaSets to give you zero-downtime rolling updates, instant rollbacks, and declarative version history. This is the controller you'll use 90% of the time.
+
+> **After this section you will be able to:**
+> - Configure zero-downtime rolling updates with `maxSurge` and `maxUnavailable` parameters
+> - Perform live rollouts, pauses, and rollbacks using `kubectl rollout` commands
+> - Track revision history and audit causes using `kubernetes.io/change-cause` annotations
 
 ---
 
@@ -164,7 +169,7 @@ kubectl rollout undo deployment/my-app --to-revision=1
 kubectl rollout status deployment/my-app
 ```
 
-> 🏭 **In Production:** Always annotate deployments with `--record` (deprecated) or `kubernetes.io/change-cause` so `rollout history` is meaningful. "Deployed by CI build #1234 - ticket PROJ-567" is infinitely more useful than `<none>`.
+> 🏭 **In Production:** Always annotate deployments with the `kubernetes.io/change-cause` annotation to track rollout history. "Deployed by CI build #1234 - ticket PROJ-567" is infinitely more useful than `<none>`.
 
 ---
 

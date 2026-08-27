@@ -1,8 +1,13 @@
 # 4.1 ReplicaSets — Desired State and Self-Healing
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** A ReplicaSet ensures N copies of a pod are always running. If one dies, it creates a replacement. You almost never create ReplicaSets directly — Deployments manage them for you. But understanding them explains how Deployments work.
+
+> **After this section you will be able to:**
+> - Understand how ReplicaSets manage pod replication through label selectors and owner references
+> - Explain why Deployments supersede direct ReplicaSet management in practice
+> - Observe ReplicaSet self-healing behavior when pods are deleted
 
 ---
 
@@ -34,7 +39,7 @@ The ReplicaSet Controller runs a continuous loop:
 ```mermaid
 graph LR
     RS[ReplicaSet Controller]
-    RS -->|Count pods with\nlabel app=nginx| C{Actual vs Desired}
+    RS -->|Count pods with<br/>label app=nginx| C{Actual vs Desired}
     C -->|"Actual: 3 = Desired: 3"| OK[✅ Nothing to do]
     C -->|"Actual: 2 < Desired: 3"| CREATE[Create 1 pod from template]
     C -->|"Actual: 4 > Desired: 3"| DELETE[Delete 1 pod]
@@ -71,8 +76,8 @@ If you have a ReplicaSet running `nginx:1.24` and you want to update to `nginx:1
 
 ```mermaid
 graph TB
-    D[Deployment] --> RS1[ReplicaSet v1\nnginx:1.24\nreplicas: 0]
-    D --> RS2[ReplicaSet v2\nnginx:1.25\nreplicas: 3]
+    D[Deployment] --> RS1[ReplicaSet v1<br/>nginx:1.24<br/>replicas: 0]
+    D --> RS2[ReplicaSet v2<br/>nginx:1.25<br/>replicas: 3]
 ```
 
 The old RS stays (with 0 replicas) to allow rollbacks.

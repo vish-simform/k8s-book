@@ -1,8 +1,13 @@
 # 17.1 How a Pod Gets Created — The Full Journey
 
-⏱️ **~15 min read**
+⏱️ **8 min read · 7 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** `kubectl apply` is just the start. A pod creation touches 6+ components across the control plane and the worker node before a single container runs. Here's every step.
+
+> **After this section you will be able to:**
+> - Trace every step of pod creation across API Server, etcd, Scheduler, Kubelet, and CRI
+> - Understand the role of Admission Controllers (mutating and validating webhooks)
+> - Inspect CRI pod sandboxes and pause containers directly using `crictl`
 
 ---
 
@@ -148,7 +153,7 @@ Events:
   Type    Reason     Age   From               Message
   ----    ------     ----  ----               -------
   Normal  Scheduled  30s   default-scheduler  Successfully assigned default/nginx-xxx to minikube
-  Normal  Pulling    29s   kubelet            Pulling image "nginx:latest"
+  Normal  Pulling    29s   kubelet            Pulling image "nginx:1.25"
   Normal  Pulled     25s   kubelet            Successfully pulled image
   Normal  Created    25s   kubelet            Created container nginx
   Normal  Started    25s   kubelet            Started container nginx
@@ -179,14 +184,15 @@ The **Kubelet** on each node watches the API server for pods assigned to *its* n
 Every pod has a hidden **pause** (or "infra") container you never see:
 
 ```bash
-# SSH into minikube node and see the pause containers
+# SSH into minikube node and see the pause containers via CRI
 minikube ssh
-docker ps | grep pause
+sudo crictl ps | grep pause
 ```
 
 **Expected output:**
 ```
-sha256:abc123  k8s.gcr.io/pause:3.9  "/pause"  Up 2 hours  k8s_POD_nginx-xxx_default
+CONTAINER ID   IMAGE                                     CREATED         STATE     NAME    ATTEMPT   POD ID
+sha256:abc123  registry.k8s.io/pause:3.9                 2 hours ago     Running   pause   0         k8s_POD_nginx-xxx_default
 ```
 
 This `pause` container is the network namespace anchor. All other containers in the pod join its network namespace — that's how they share an IP and can reach each other on `localhost`.

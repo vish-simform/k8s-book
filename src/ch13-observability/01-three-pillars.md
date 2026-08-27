@@ -1,8 +1,17 @@
 # 13.1 The Three Pillars of Observability
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 5 min hands-on** · 🔴 Advanced
+
+> 📡 **Scenario:** Users report that page loads suddenly take 12 seconds instead of 200ms across your 40 microservices. You have no centralized logs, no metrics dashboard, and no tracing—you're SSHing into nodes one by one running `kubectl logs` blindly.
+>
+> *After this section, you'll be able to pinpoint the root cause of production regressions across Metrics, Logs, and Traces in minutes.*
 
 > **TL;DR:** Observability is the ability to understand the internal state of a system from its external outputs. In Kubernetes, this means three things: **Logs** (what happened), **Metrics** (how things are behaving), and **Traces** (why a request was slow). Without all three, you're flying blind.
+
+> **After this section you will be able to:**
+> - Understand the Three Pillars of Observability (Metrics, Logs, Traces) in cloud-native systems
+> - Evaluate pull-based metrics scraping (Prometheus) vs centralized push logging (Loki/Fluentd)
+> - Design an end-to-end observability strategy for Kubernetes production clusters
 
 ---
 
@@ -19,12 +28,12 @@ Traditional monitoring asks pre-defined questions: "Is CPU above 80%?" This work
 ```mermaid
 graph TD
     subgraph "Observability Stack"
-        L["📋 LOGS\nDiscrete events\nwith timestamps\n\nkubectl logs\nFluentd / Loki"]
-        M["📈 METRICS\nNumeric measurements\nover time\n\nPrometheus\nmetrics-server"]
-        T["🔍 TRACES\nCross-service request\nflow with spans\n\nJaeger / Zipkin\nOpenTelemetry"]
+        L["📋 LOGS<br/>Discrete events<br/>with timestamps<br/><br/>kubectl logs<br/>Fluentd / Loki"]
+        M["📈 METRICS<br/>Numeric measurements<br/>over time<br/><br/>Prometheus<br/>metrics-server"]
+        T["🔍 TRACES<br/>Cross-service request<br/>flow with spans<br/><br/>Jaeger / Zipkin<br/>OpenTelemetry"]
     end
 
-    L -->|"What happened?"| Q["Answer\nAny Question"]
+    L -->|"What happened?"| Q["Answer<br/>Any Question"]
     M -->|"How is it behaving?"| Q
     T -->|"Why was it slow?"| Q
 ```
@@ -81,7 +90,7 @@ In this chapter we focus on what you can build on Minikube today:
 └─────────────────────────────────────────────────────┘
 ```
 
-> **Chapter scope:** We cover Logs + Metrics + Dashboards in depth. Distributed Tracing with OpenTelemetry/Jaeger is introduced conceptually — a full tracing setup requires a service mesh and is covered in advanced chapters.
+> **Chapter scope:** We cover Logs + Metrics + Dashboards in depth. Distributed Tracing with OpenTelemetry/Jaeger is introduced conceptually — a full tracing setup requires instrumented services and a tracing backend. See the [OpenTelemetry documentation](https://opentelemetry.io/docs/) for getting started.
 
 ---
 

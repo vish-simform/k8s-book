@@ -221,6 +221,7 @@ spec:
         resources:
           requests: {cpu: "50m", memory: "32Mi"}
 ---
+
 # Backend
 apiVersion: apps/v1
 kind: Deployment
@@ -246,6 +247,7 @@ spec:
         resources:
           requests: {cpu: "50m", memory: "32Mi"}
 ---
+
 # Database (simulated with redis)
 apiVersion: apps/v1
 kind: Deployment
@@ -271,6 +273,7 @@ spec:
         resources:
           requests: {cpu: "50m", memory: "32Mi"}
 ---
+
 # Services
 apiVersion: v1
 kind: Service
@@ -335,6 +338,7 @@ spec:
   - Ingress
   - Egress
 ---
+
 # 2. Allow DNS for all pods
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -351,6 +355,7 @@ spec:
     - protocol: TCP
       port: 53
 ---
+
 # 3. Allow frontend → backend
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -371,6 +376,7 @@ spec:
     - protocol: TCP
       port: 80
 ---
+
 # 4. Allow backend → database only
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -391,6 +397,7 @@ spec:
     - protocol: TCP
       port: 6379
 ---
+
 # 5. Allow backend egress to database
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -411,6 +418,7 @@ spec:
     - protocol: TCP
       port: 6379
 ---
+
 # 6. Allow frontend egress to backend
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy

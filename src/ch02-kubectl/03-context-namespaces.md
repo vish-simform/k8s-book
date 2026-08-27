@@ -1,8 +1,13 @@
 # 2.3 Context, Namespaces, and kubeconfig
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟢 Beginner
 
 > **TL;DR:** `kubeconfig` stores your cluster credentials. A **context** is a named combo of cluster + user + namespace. **Namespaces** isolate resources within a cluster. Knowing how to switch between them is essential once you have more than one cluster.
+
+> **After this section you will be able to:**
+> - Navigate multi-cluster credentials and contexts inside `~/.kube/config`
+> - Create and switch between Kubernetes namespaces to isolate environments
+> - Manage active context and default namespace without manual config file edits
 
 ---
 

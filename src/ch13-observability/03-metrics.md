@@ -1,8 +1,13 @@
 # 13.3 Metrics — Prometheus and metrics-server
 
-⏱️ **~8 min read**
+⏱️ **6 min read · 7 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** Kubernetes has two layers of metrics: **metrics-server** (lightweight, powers HPA and `kubectl top`) and **Prometheus** (full-featured time-series database for alerting and dashboards). Prometheus uses a **pull model** — it scrapes `/metrics` endpoints from your pods on a schedule. You annotate pods to tell it where to look.
+
+> **After this section you will be able to:**
+> - Deploy and query the Kubernetes Metrics Server for core resource utilization stats
+> - Understand Prometheus scraping architectures, ServiceMonitors, and PromQL basics
+> - Expose custom application metrics via Prometheus client libraries
 
 ---
 
@@ -11,7 +16,7 @@
 ```mermaid
 graph TD
     subgraph "Layer 1: Built-in (metrics-server)"
-        MS["metrics-server\n(in-cluster)"]
+        MS["metrics-server<br/>(in-cluster)"]
         KT["kubectl top pods/nodes"]
         HPA["HorizontalPodAutoscaler"]
         MS --> KT
@@ -19,15 +24,15 @@ graph TD
     end
 
     subgraph "Layer 2: Full (Prometheus)"
-        P["Prometheus\n(scrapes /metrics)"]
-        AM["AlertManager\n(fire alerts)"]
-        G["Grafana\n(dashboards)"]
+        P["Prometheus<br/>(scrapes /metrics)"]
+        AM["AlertManager<br/>(fire alerts)"]
+        G["Grafana<br/>(dashboards)"]
         P --> AM
         P --> G
     end
 
-    K8S["Kubernetes\nAPI Server"]
-    PODS["Your Pods\n(/metrics endpoint)"]
+    K8S["Kubernetes<br/>API Server"]
+    PODS["Your Pods<br/>(/metrics endpoint)"]
 
     K8S --> MS
     PODS --> P

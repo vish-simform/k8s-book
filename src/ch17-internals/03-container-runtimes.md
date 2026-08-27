@@ -1,8 +1,13 @@
 # 17.3 Container Runtimes and the CRI
 
-⏱️ **~8 min read**
+⏱️ **6 min read · 5 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** Kubernetes doesn't run containers itself — it delegates to a **Container Runtime** via the **CRI (Container Runtime Interface)**. Docker, containerd, and CRI-O are all valid runtimes; K8s doesn't care which one you use.
+
+> **After this section you will be able to:**
+> - Understand the Container Runtime Interface (CRI) gRPC architecture
+> - Compare high-level runtimes (containerd, CRI-O) with low-level runtimes (runc, crun, gVisor)
+> - Debug container sandboxes and images using the `crictl` CLI
 
 ---
 
@@ -79,7 +84,7 @@ sudo ctr -n k8s.io containers list | head -20
 ```
 CONTAINER                                                           IMAGE                                          RUNTIME
 0a3b4f5c6d...   registry.k8s.io/pause:3.9                         io.containerd.runc.v2
-1b2c3d4e5f...   docker.io/library/nginx:latest                     io.containerd.runc.v2
+1b2c3d4e5f...   docker.io/library/nginx:1.25                      io.containerd.runc.v2
 ...
 ```
 

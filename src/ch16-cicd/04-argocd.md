@@ -1,8 +1,13 @@
 # 16.4 ArgoCD — Declarative CD for Kubernetes
 
-⏱️ **~8 min read**
+⏱️ **6 min read · 8 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** ArgoCD is a GitOps continuous delivery controller that runs inside your cluster. It watches a Git repository, compares the desired state (Git) with the actual state (cluster), and automatically syncs the difference. Every deployment, rollback, and status check goes through ArgoCD's UI or CLI — `kubectl apply` in production becomes a thing of the past.
+
+> **After this section you will be able to:**
+> - Deploy and configure the ArgoCD GitOps engine in Kubernetes
+> - Create declarative ArgoCD `Application` and `ApplicationSet` resources watching Git repositories
+> - Manage automatic synchronization, self-healing, and visual health rollouts
 
 ---
 
@@ -11,22 +16,22 @@
 ```mermaid
 graph TD
     subgraph "Git Repository"
-        REPO["Config Repo\n(Kustomize / Helm / raw YAML)"]
+        REPO["Config Repo<br/>(Kustomize / Helm / raw YAML)"]
     end
 
     subgraph "Kubernetes Cluster"
         API["API Server"]
         subgraph "argocd namespace"
-            APPCTRL["Application\nController\n(reconcile loop)"]
-            APISERVER["ArgoCD\nAPI Server"]
-            REPOSERVER["Repo\nServer\n(render templates)"]
-            APPSET["ApplicationSet\nController"]
+            APPCTRL["Application<br/>Controller<br/>(reconcile loop)"]
+            APISERVER["ArgoCD<br/>API Server"]
+            REPOSERVER["Repo<br/>Server<br/>(render templates)"]
+            APPSET["ApplicationSet<br/>Controller"]
         end
-        YOURNS["Your\nNamespace\n(Deployments, Services…)"]
+        YOURNS["Your<br/>Namespace<br/>(Deployments, Services…)"]
     end
 
     subgraph "Users"
-        UI["ArgoCD UI\n(browser)"]
+        UI["ArgoCD UI<br/>(browser)"]
         ARGOCLI["argocd CLI"]
     end
 
@@ -217,6 +222,7 @@ spec:
         command: ["python", "manage.py", "migrate"]
       restartPolicy: Never
 ---
+
 # 2. Application Deployment (wave 0, default)
 apiVersion: apps/v1
 kind: Deployment
@@ -253,14 +259,17 @@ spec:
         cluster: https://dev-cluster:6443
         namespace: my-app-dev
         revision: main
+        selfHeal: "true"
       - env: staging
         cluster: https://staging-cluster:6443
         namespace: my-app-staging
         revision: main
+        selfHeal: "true"
       - env: production
         cluster: https://prod-cluster:6443
         namespace: my-app-prod
         revision: v1.2.3          # Prod is pinned to a release tag
+        selfHeal: "false"         # Manual sync / no auto-heal for prod
   template:
     metadata:
       name: "my-app-{{env}}"
@@ -276,7 +285,7 @@ spec:
       syncPolicy:
         automated:
           prune: true
-          selfHeal: "{{env}}" != "production"  # Manual sync for prod
+          selfHeal: "{{selfHeal}}" # selfHeal is a boolean — parameterized via generator elements
 ```
 
 ---

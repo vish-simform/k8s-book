@@ -1,8 +1,13 @@
 # 11.1 Requests and Limits — The Fundamentals
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** `requests` is what the scheduler uses to place your pod on a node (guaranteed capacity). `limits` is the maximum your container can consume before being throttled (CPU) or killed (memory). Never omit both — it causes chaos.
+
+> **After this section you will be able to:**
+> - Establish baseline CPU and Memory requests and limits for container reliability
+> - Understand CFS CPU quota throttling vs memory OOMKilled termination behavior
+> - Monitor live container resource consumption using `kubectl top`
 
 ---
 
@@ -60,8 +65,8 @@ memory: "128M"    # Megabytes (powers of 10) — avoid confusion, use Mi
 
 ```mermaid
 graph LR
-    POD["Pod\nrequests:\n cpu: 250m\n memory: 128Mi"] --> SCHED[Scheduler]
-    SCHED -->|"Finds a node with\n≥250m free CPU\n≥128Mi free memory"| NODE[Node\n4 CPU / 16Gi total\n3.5 CPU / 14Gi free]
+    POD["Pod<br/>requests:<br/> cpu: 250m<br/> memory: 128Mi"] --> SCHED[Scheduler]
+    SCHED -->|"Finds a node with<br/>≥250m free CPU<br/>≥128Mi free memory"| NODE[Node<br/>4 CPU / 16Gi total<br/>3.5 CPU / 14Gi free]
     NODE --> PLACE[Pod placed ✅]
 ```
 

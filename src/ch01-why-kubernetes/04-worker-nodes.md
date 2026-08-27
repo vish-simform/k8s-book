@@ -1,8 +1,13 @@
 # 1.4 Worker Nodes and the Kubelet
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 4 min hands-on** · 🟢 Beginner
 
 > **TL;DR:** Worker nodes are where your pods actually live. Three components do the work: **Kubelet** (the agent), **kube-proxy** (the network rules), and a **container runtime** (the actual container runner).
+
+> **After this section you will be able to:**
+> - Explain the responsibilities of `kubelet`, `kube-proxy`, and the Container Runtime (CRI)
+> - Contrast how kubelet manages container lifecycles with how kube-proxy manages network packet filters
+> - Query worker node allocatable resources, capacity, and system conditions
 
 ---
 
@@ -11,9 +16,9 @@
 ```mermaid
 graph TB
     subgraph "Worker Node"
-        KB[Kubelet\n'The Node Agent']
-        KP[kube-proxy\n'Network Rules']
-        CR[Container Runtime\ncontainerd]
+        KB[Kubelet<br/>'The Node Agent']
+        KP[kube-proxy<br/>'Network Rules']
+        CR[Container Runtime<br/>containerd]
         
         subgraph "Pod A"
             C1[Container 1]
@@ -64,7 +69,7 @@ kube-proxy runs on every node and maintains **iptables/IPVS rules** that impleme
 
 ```mermaid
 graph LR
-    Client[Client Pod] -->|"10.96.0.1:80\n(Service ClusterIP)"| KP[kube-proxy rules\non this node]
+    Client[Client Pod] -->|"10.96.0.1:80<br/>(Service ClusterIP)"| KP[kube-proxy rules<br/>on this node]
     KP -->|forwards to| P1[Pod 10.244.1.5:8080]
     KP -->|or forwards to| P2[Pod 10.244.2.3:8080]
     KP -->|or forwards to| P3[Pod 10.244.3.7:8080]
@@ -117,7 +122,7 @@ sequenceDiagram
     S->>A: Assign pod XYZ to node-1
     KB->>A: Poll: any pods for me?
     A-->>KB: Yes, pod XYZ
-    KB->>CR: Pull image nginx:latest
+    KB->>CR: Pull image nginx:1.25
     CR-->>KB: Image ready
     KB->>CR: Start container
     CR-->>KB: Container running (PID 1234)

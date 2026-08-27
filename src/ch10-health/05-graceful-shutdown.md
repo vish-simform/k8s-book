@@ -1,8 +1,13 @@
 # 10.5 Graceful Shutdown and `preStop` Hooks
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** When Kubernetes terminates a pod, it sends SIGTERM and waits `terminationGracePeriodSeconds` (default 30s) before force-killing with SIGKILL. Use a `preStop` hook and handle SIGTERM to drain connections cleanly and avoid dropped requests.
+
+> **After this section you will be able to:**
+> - Trace the step-by-step Pod termination lifecycle (Endpoint removal, SIGTERM, `terminationGracePeriodSeconds`, SIGKILL)
+> - Implement `preStop` lifecycle hooks to drain active connections before container shutdown
+> - Eliminate 502/504 errors during rolling deployments by synchronizing teardown timers
 
 ---
 
@@ -20,7 +25,7 @@ sequenceDiagram
     POD->>POD: preStop completes (or times out)
     K->>POD: Send SIGTERM to PID 1
     Note over LB: iptables rules updated (async!)
-    POD->>POD: Handle SIGTERM\nStop accepting new connections\nFinish in-flight requests
+    POD->>POD: Handle SIGTERM<br/>Stop accepting new connections<br/>Finish in-flight requests
     K->>POD: Wait terminationGracePeriodSeconds (30s default)
     POD->>K: Process exits cleanly ✅
     Note over K: (or)

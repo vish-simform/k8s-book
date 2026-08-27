@@ -1,8 +1,13 @@
 # 7.1 ConfigMaps — Externalizing Configuration
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** A ConfigMap stores non-sensitive configuration as key-value pairs. It decouples your container image from its configuration — the same image can run in dev, staging, and prod with different ConfigMaps injected at runtime.
+
+> **After this section you will be able to:**
+> - Decouple application code and container images from environment configurations using ConfigMaps
+> - Create ConfigMaps imperatively from files, directories, and literals
+> - Inject ConfigMap data into containers as environment variables and mounted files
 
 ---
 

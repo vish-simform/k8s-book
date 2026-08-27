@@ -1,8 +1,13 @@
 # 8.2 PersistentVolumes and PersistentVolumeClaims
 
-⏱️ **~7 min read**
+⏱️ **6 min read · 7 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** A PersistentVolume (PV) is a piece of actual storage provisioned by an admin. A PersistentVolumeClaim (PVC) is a pod's request for storage. Kubernetes binds PVCs to PVs automatically. In practice, StorageClasses (next section) eliminate the need to create PVs manually.
+
+> **After this section you will be able to:**
+> - Understand the separation of concerns between PersistentVolumes (admin) and PVCs (developer)
+> - Trace the binding lifecycle from PVC creation to PV matching and pod mounting
+> - Inspect bound volume statuses and storage allocation parameters
 
 ---
 
@@ -10,13 +15,13 @@
 
 ```mermaid
 graph TB
-    DEV["Developer\nPod + PVC\n(requests 5Gi)"]
-    OPS["Admin\nPersistentVolume\n(provisions 10Gi EBS volume)"]
-    K8S["Kubernetes\nBinding\n(PVC → PV)"]
+    DEV["Developer<br/>Pod + PVC<br/>(requests 5Gi)"]
+    OPS["Admin<br/>PersistentVolume<br/>(provisions 10Gi EBS volume)"]
+    K8S["Kubernetes<br/>Binding<br/>(PVC → PV)"]
 
-    DEV -->|creates| PVC[PersistentVolumeClaim\nsize: 5Gi\naccessMode: ReadWriteOnce]
-    OPS -->|creates| PV[PersistentVolume\ncapacity: 10Gi\naccessMode: ReadWriteOnce\nAWS EBS vol-xxxxx]
-    K8S -->|binds| BIND[PVC bound to PV\nPod gets the storage]
+    DEV -->|creates| PVC[PersistentVolumeClaim<br/>size: 5Gi<br/>accessMode: ReadWriteOnce]
+    OPS -->|creates| PV[PersistentVolume<br/>capacity: 10Gi<br/>accessMode: ReadWriteOnce<br/>AWS EBS vol-xxxxx]
+    K8S -->|binds| BIND[PVC bound to PV<br/>Pod gets the storage]
     PVC --> BIND
     PV --> BIND
 ```
@@ -131,9 +136,9 @@ spec:
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Pending : PVC created\nno matching PV yet
+    [*] --> Pending : PVC created<br/>no matching PV yet
     Pending --> Bound : K8s found a matching PV
-    Bound --> Released : Pod deleted PVC deleted\nPV still has data (Retain policy)
+    Bound --> Released : Pod deleted PVC deleted<br/>PV still has data (Retain policy)
     Released --> Available : Admin manually cleans data
     Available --> Bound : New PVC can bind
     Bound --> Lost : PV backend becomes unavailable

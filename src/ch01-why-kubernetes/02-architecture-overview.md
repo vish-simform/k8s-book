@@ -1,8 +1,13 @@
 # 1.2 Kubernetes Architecture — The 10,000ft View
 
-⏱️ **~8 min read**
+⏱️ **5 min read · 4 min hands-on** · 🟢 Beginner
 
 > **TL;DR:** A Kubernetes cluster has two kinds of machines: a **Control Plane** (the brain) and **Worker Nodes** (the muscle). Everything you do goes through the API Server.
+
+> **After this section you will be able to:**
+> - Distinguish between Control Plane responsibilities and Worker Node execution
+> - Trace the lifecycle of a `kubectl` command through the API Server, Scheduler, and Kubelet
+> - Inspect cluster health and node status using `kubectl cluster-info` and `kubectl get nodes`
 
 ---
 
@@ -13,10 +18,10 @@ Every Kubernetes cluster, whether it's running on your laptop via Minikube or po
 ```mermaid
 graph TB
     subgraph "Control Plane (The Brain)"
-        API[🔵 API Server\nkube-apiserver]
-        ETCD[🗃️ etcd\nCluster Store]
-        SCHED[📅 Scheduler\nkube-scheduler]
-        CM[⚙️ Controller Manager\nkube-controller-manager]
+        API[🔵 API Server<br/>kube-apiserver]
+        ETCD[🗃️ etcd<br/>Cluster Store]
+        SCHED[📅 Scheduler<br/>kube-scheduler]
+        CM[⚙️ Controller Manager<br/>kube-controller-manager]
 
         API <-->|read/write| ETCD
         API --> SCHED
@@ -26,7 +31,7 @@ graph TB
     subgraph "Worker Node 1"
         KB1[Kubelet]
         KP1[kube-proxy]
-        CR1[Container Runtime\ncontainerd / CRI-O]
+        CR1[Container Runtime<br/>containerd / CRI-O]
         P1[Pod A]
         P2[Pod B]
         KB1 --> CR1 --> P1 & P2

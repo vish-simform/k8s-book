@@ -1,8 +1,13 @@
 # 6.2 Setting Up NGINX Ingress on Minikube
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** One command enables the NGINX Ingress Controller on Minikube. After that, you need a way to reach it — either via `minikube tunnel` or by using Minikube's built-in IP with the NodePort the controller exposes.
+
+> **After this section you will be able to:**
+> - Enable and verify the NGINX Ingress Controller addon in Minikube
+> - Route external requests through the Ingress controller to local services
+> - Inspect Ingress controller logs and generated nginx configuration files
 
 ---
 
@@ -110,11 +115,11 @@ curl -H "Host: myapp.local" http://$MINIKUBE_IP
 
 ```mermaid
 graph LR
-    Browser -->|"myapp.local:80"| HOST["/etc/hosts:\nmyapp.local → 192.168.49.2"]
-    HOST -->|"192.168.49.2:80"| NP["Minikube Node\nNodePort :31xxx"]
-    NP --> IC["ingress-nginx-controller\npod"]
-    IC -->|"Host: myapp.local\nPath: /api"| API[api-svc]
-    IC -->|"Host: myapp.local\nPath: /"| WEB[web-svc]
+    Browser -->|"myapp.local:80"| HOST["/etc/hosts:<br/>myapp.local → 192.168.49.2"]
+    HOST -->|"192.168.49.2:80"| NP["Minikube Node<br/>NodePort :31xxx"]
+    NP --> IC["ingress-nginx-controller<br/>pod"]
+    IC -->|"Host: myapp.local<br/>Path: /api"| API[api-svc]
+    IC -->|"Host: myapp.local<br/>Path: /"| WEB[web-svc]
 ```
 
 ---

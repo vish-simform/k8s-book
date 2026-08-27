@@ -1,8 +1,13 @@
 # 14.4 Pod Affinity and Anti-Affinity
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 6 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** **Pod Affinity** co-locates pods with other pods (e.g., put my cache next to my app). **Pod Anti-Affinity** spreads pods apart (e.g., never put two replicas on the same node). Both work by examining what pods are **already running** on candidate nodes/zones, not node labels. The result is placement decisions that are dynamic and topology-aware.
+
+> **After this section you will be able to:**
+> - Co-locate dependent services in the same failure domain using `podAffinity`
+> - Distribute replicas across distinct zones and hosts using `podAntiAffinity` for high availability
+> - Configure `topologyKey` settings for multi-zone fault tolerance
 
 ---
 
@@ -210,6 +215,7 @@ spec:
       - name: web
         image: my-web-app:latest
 ---
+
 # redis: co-located with web-app on each node
 apiVersion: apps/v1
 kind: Deployment

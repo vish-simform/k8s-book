@@ -1,8 +1,13 @@
 # 15.4 Image Security — Scanning and Supply Chain
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 6 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** Your application is only as secure as the container image it runs in. Image security has three layers: **scanning** (find known CVEs in image layers), **supply chain hardening** (build minimal images, sign them, verify provenance), and **runtime admission** (only allow images from trusted registries with no critical CVEs). A compromised image is the most common entry point for container-level attacks.
+
+> **After this section you will be able to:**
+> - Scan container images for CVE vulnerabilities using Trivy
+> - Implement image provenance verification and signature validation with Cosign/Sigstore
+> - Enforce strict digest pinning and immutable tag policies across production clusters
 
 ---
 

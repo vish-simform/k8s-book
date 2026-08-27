@@ -1,8 +1,13 @@
 # 11.2 QoS Classes and Pod Eviction
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** Kubernetes assigns each pod a QoS (Quality of Service) class based on its resource spec. When a node runs out of resources, pods are evicted in QoS order — `BestEffort` first, then `Burstable`, `Guaranteed` last.
+
+> **After this section you will be able to:**
+> - Determine Pod Quality of Service (QoS) classes: `Guaranteed`, `Burstable`, `BestEffort`
+> - Understand node pressure eviction order when memory or disk thresholds are breached
+> - Architect mission-critical workloads to prevent eviction during node resource crunches
 
 ---
 
@@ -45,10 +50,10 @@ Under node memory pressure (node is running out of memory):
 
 ```mermaid
 graph TD
-    PRESSURE[Node Memory Pressure\nkubelet detects < 10% free] --> E1
+    PRESSURE[Node Memory Pressure<br/>kubelet detects < 10% free] --> E1
     E1[Evict BestEffort pods first] -->|Still under pressure?| E2
-    E2[Evict Burstable pods\nby usage over request ratio] -->|Still under pressure?| E3
-    E3[Evict Guaranteed pods\nas last resort]
+    E2[Evict Burstable pods<br/>by usage over request ratio] -->|Still under pressure?| E3
+    E3[Evict Guaranteed pods<br/>as last resort]
     
     style E1 fill:#ff4444,color:white
     style E2 fill:#ff8800,color:white

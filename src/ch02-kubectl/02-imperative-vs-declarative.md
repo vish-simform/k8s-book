@@ -1,8 +1,13 @@
 # 2.2 Imperative vs Declarative — Two Ways to Talk to K8s
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟢 Beginner
 
 > **TL;DR:** Imperative = "do this now." Declarative = "this is what I want." Use imperative for quick experiments; always use declarative (`kubectl apply -f`) in real workflows.
+
+> **After this section you will be able to:**
+> - Differentiate imperative creation (`kubectl create/run`) from declarative reconciliation (`kubectl apply`)
+> - Understand how `kubectl apply` performs 3-way merges using `last-applied-configuration`
+> - Generate production starter YAML boilerplate rapidly using `--dry-run=client -o yaml`
 
 ---
 

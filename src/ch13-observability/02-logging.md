@@ -1,8 +1,13 @@
 # 13.2 Logging — kubectl logs, Stern, and Aggregation
 
-⏱️ **~7 min read**
+⏱️ **5 min read · 7 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** Kubernetes collects anything your container writes to **stdout/stderr** and makes it available via `kubectl logs`. For multi-pod scenarios, use **Stern** for fan-out log tailing. For production-grade aggregation, use the **EFK stack** (Elasticsearch + Fluentd + Kibana) or the lighter-weight **PLG stack** (Promtail + Loki + Grafana).
+
+> **After this section you will be able to:**
+> - Extract container stdout/stderr logs using `kubectl logs` with timestamps, tails, and previous flags
+> - Understand node-level log rotation and CRI log file formats
+> - Architect cluster-wide logging pipelines using DaemonSets and log shippers
 
 ---
 
@@ -10,14 +15,14 @@
 
 ```mermaid
 graph LR
-    APP["App Process\n(your container)"]
+    APP["App Process<br/>(your container)"]
     STDOUT["stdout / stderr"]
-    KUBELET["kubelet\n(node agent)"]
-    LOGFILE["Node log file\n/var/log/pods/..."]
-    KUBECTL["kubectl logs\npod/my-app"]
-    AGG["Log Aggregator\n(Fluentd/Promtail)"]
-    STORE["Log Store\n(Loki / Elasticsearch)"]
-    UI["UI\n(Grafana / Kibana)"]
+    KUBELET["kubelet<br/>(node agent)"]
+    LOGFILE["Node log file<br/>/var/log/pods/..."]
+    KUBECTL["kubectl logs<br/>pod/my-app"]
+    AGG["Log Aggregator<br/>(Fluentd/Promtail)"]
+    STORE["Log Store<br/>(Loki / Elasticsearch)"]
+    UI["UI<br/>(Grafana / Kibana)"]
 
     APP --> STDOUT --> KUBELET --> LOGFILE
     LOGFILE --> KUBECTL

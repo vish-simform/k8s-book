@@ -1,8 +1,13 @@
 # 8.1 The Storage Problem and Volume Types
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** Container filesystems are ephemeral — they vanish when the container restarts. Kubernetes Volumes solve this by attaching external storage to pods. There are many volume types; knowing which to use when is the skill.
+
+> **After this section you will be able to:**
+> - Explain why container filesystems are ephemeral and require external volume storage
+> - Utilize `emptyDir` volumes for temporary scratch space and container data sharing
+> - Understand `hostPath` risks and cloud block storage volume abstractions
 
 ---
 
@@ -10,8 +15,8 @@
 
 ```mermaid
 graph LR
-    P1["Pod (nginx)\nWrites /data/uploads/\n10,000 images"] -->|Pod crashes| DEAD[💀]
-    NEW["New Pod (nginx)\nFresh container\nFilesystem empty"] -->|"Where's\n/data/uploads?"| Q[❓ Gone forever]
+    P1["Pod (nginx)<br/>Writes /data/uploads/<br/>10,000 images"] -->|Pod crashes| DEAD[💀]
+    NEW["New Pod (nginx)<br/>Fresh container<br/>Filesystem empty"] -->|"Where's<br/>/data/uploads?"| Q[❓ Gone forever]
 ```
 
 Any data written inside a container lives only as long as the container lives. This is by design — it makes containers stateless and reproducible. But databases, file storage, and caches *need* persistence.

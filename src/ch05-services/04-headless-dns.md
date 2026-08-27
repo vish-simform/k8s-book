@@ -1,8 +1,13 @@
 # 5.4 Headless Services and DNS
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** A Headless Service (`clusterIP: None`) skips the virtual IP entirely. DNS returns the **actual pod IPs** directly. This is essential for StatefulSets and any app that needs to know which specific instance it's talking to.
+
+> **After this section you will be able to:**
+> - Create Headless Services (`clusterIP: None`) for direct pod-to-pod communication
+> - Understand DNS SRV and A record resolution for stateful cluster peer discovery
+> - Combine Headless Services with StatefulSets for master-replica database architectures
 
 ---
 
@@ -57,14 +62,14 @@ When a Headless Service is used with a StatefulSet (`serviceName: mongo`), each 
 ```mermaid
 graph TB
     subgraph "Headless Service: mongo"
-        DNS1["mongo-0.mongo.default.svc.cluster.local\n→ 10.244.0.5"]
-        DNS2["mongo-1.mongo.default.svc.cluster.local\n→ 10.244.0.6"]
-        DNS3["mongo-2.mongo.default.svc.cluster.local\n→ 10.244.0.7"]
+        DNS1["mongo-0.mongo.default.svc.cluster.local<br/>→ 10.244.0.5"]
+        DNS2["mongo-1.mongo.default.svc.cluster.local<br/>→ 10.244.0.6"]
+        DNS3["mongo-2.mongo.default.svc.cluster.local<br/>→ 10.244.0.7"]
     end
     
-    Client[MongoDB\nClient Library] -->|"Primary:\nmongo-0.mongo..."| P0[mongo-0]
-    Client -->|"Secondary:\nmongo-1.mongo..."| P1[mongo-1]
-    Client -->|"Secondary:\nmongo-2.mongo..."| P2[mongo-2]
+    Client[MongoDB<br/>Client Library] -->|"Primary:<br/>mongo-0.mongo..."| P0[mongo-0]
+    Client -->|"Secondary:<br/>mongo-1.mongo..."| P1[mongo-1]
+    Client -->|"Secondary:<br/>mongo-2.mongo..."| P2[mongo-2]
 ```
 
 The MongoDB client can discover and address each replica independently — something impossible with a ClusterIP Service that hides individual pod identities.

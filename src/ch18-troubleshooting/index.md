@@ -1,6 +1,6 @@
 # Chapter 18: Troubleshooting Playbook
 
-⏱️ **Total chapter time: ~60 min** (35 min reading + 25 min exercises)
+⏱️ **Total chapter time: ~70 min** (40 min reading + 30 min lab)
 
 > **After this chapter, you will be able to:** Systematically debug any broken pod, service, or storage issue in Kubernetes using a repeatable mental model and a concrete set of `kubectl` commands.
 
@@ -10,11 +10,12 @@
 
 | Section | Topic | Time |
 |---|---|---|
-| 18.1 | The Debugging Mental Model | ~8 min |
-| 18.2 | Pod Failures — CrashLoopBackOff, ImagePullBackOff, OOMKilled | ~10 min |
-| 18.3 | Networking Failures — DNS, Services, Connectivity | ~10 min |
-| 18.4 | Storage and Permission Issues | ~7 min |
-| 18.5 | The Troubleshooting Cheat Sheet | ~5 min |
+| 18.1 | [The Debugging Mental Model](./01-mental-model.md) | ~8 min |
+| 18.2 | [Pod Failures — CrashLoopBackOff, ImagePullBackOff, OOMKilled](./02-pod-failures.md) | ~10 min |
+| 18.3 | [Networking Failures — DNS, Services, Connectivity](./03-network-failures.md) | ~10 min |
+| 18.4 | [Storage and Permission Issues](./04-storage-issues.md) | ~7 min |
+| 18.5 | [The Troubleshooting Cheat Sheet](./05-cheat-sheet.md) | ~5 min |
+| 18.6 | [Lab: The Kubernetes Debugging Gauntlet](./06-lab.md) | ~30 min |
 
 ## Prerequisites
 

@@ -1,8 +1,13 @@
 # 12.5 Upgrades, Rollbacks, and Release Management
 
-⏱️ **~4 min read**
+⏱️ **4 min read · 6 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** `helm upgrade` applies changes to an existing release and bumps the revision. `helm rollback` reverts to any previous revision instantly. `helm history` shows the full audit trail. This is the Helm lifecycle that makes production deployments safe.
+
+> **After this section you will be able to:**
+> - Execute safe, versioned application upgrades with `helm upgrade`
+> - Inspect historical revisions with `helm history` and roll back instantly with `helm rollback`
+> - Manage chart dependencies and packaged tarballs with `helm dependency`
 
 ---
 

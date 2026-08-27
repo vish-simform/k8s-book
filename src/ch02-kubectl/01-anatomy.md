@@ -1,8 +1,13 @@
 # 2.1 Anatomy of a kubectl Command
 
-⏱️ **~5 min read**
+⏱️ **4 min read · 5 min hands-on** · 🟢 Beginner
 
 > **TL;DR:** Every kubectl command follows one pattern: `kubectl [verb] [resource] [name] [flags]`. Master this pattern and you can figure out any command on the fly.
+
+> **After this section you will be able to:**
+> - Break down the universal `kubectl [verb] [resource] [name] [flags]` syntax
+> - Accelerate daily CLI workflows using common short names and aliases (`po`, `deploy`, `svc`, `ns`)
+> - Discover resource fields and schemas interactively with `kubectl explain`
 
 ---
 

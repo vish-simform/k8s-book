@@ -92,7 +92,7 @@ kubectl apply -f manifest.yaml --dry-run=client
 kubectl apply -f manifest.yaml --dry-run=server
 
 # Imperative creation
-kubectl create deployment nginx --image=nginx:latest --replicas=3
+kubectl create deployment nginx --image=nginx:1.25 --replicas=3
 kubectl create service clusterip my-svc --tcp=80:8080
 kubectl create namespace my-ns
 kubectl create configmap my-config --from-literal=key=value
@@ -216,11 +216,41 @@ kubectl top nodes
 
 ---
 
+## Scripting & Waiting
+
+| Command | Description |
+|---|---|
+| `kubectl wait --for=condition=ready pod -l app=myapp --timeout=120s` | Wait for pods to be ready (critical for CI/CD scripts) |
+| `kubectl wait --for=delete pod/mypod --timeout=60s` | Wait for a resource to be completely deleted |
+| `kubectl wait --for=condition=available --timeout=60s deployment/my-app` | Wait for deployment rollout to complete |
+
+---
+
+## RBAC & Auth
+
+| Command | Description |
+|---|---|
+| `kubectl auth can-i create pods` | Check if current user can create pods |
+| `kubectl auth can-i get secrets --as=system:serviceaccount:default:mysa` | Check permissions for a service account |
+| `kubectl auth can-i --list` | List all permissions granted to current context |
+
+---
+
+## Discovery
+
+| Command | Description |
+|---|---|
+| `kubectl api-resources` | List all available resource types and shortcuts in the cluster |
+| `kubectl api-resources --verbs=list --namespaced=true` | List namespaced resources that support list operations |
+| `kubectl explain pod.spec.containers` | Get official schema documentation for any resource field |
+
+---
+
 ## Debugging
 
 ```bash
 # Inject ephemeral debug container (K8s 1.23+)
-kubectl debug -it my-pod --image=nicolaka/netshoot --target=my-container
+kubectl debug -it my-pod --image=nicolaka/netshoot:v0.13 --target=my-container
 
 # Copy pod and add debug container
 kubectl debug my-pod -it --copy-to=debug-pod --image=busybox:1.36

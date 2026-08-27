@@ -1,8 +1,17 @@
 # 10.1 Why Probes Exist — The Problem They Solve
 
-⏱️ **~4 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟡 Intermediate
+
+> 📡 **Scenario:** It's 2:15 AM on a Saturday. Your database connection pool hung and your backend application has stopped answering requests, but the container process is still running. Kubernetes thinks everything is fine, so customer requests keep routing into the black hole.
+>
+> *After this section, you'll be able to configure probes that detect frozen processes and restore traffic flow automatically.*
 
 > **TL;DR:** Kubernetes can't read your app's source code. Without probes, it only knows whether the container process is running — not whether your app is actually healthy. Probes are how you teach Kubernetes what "healthy" means for your specific application.
+
+> **After this section you will be able to:**
+> - Explain why container process status alone is insufficient to determine application health
+> - Differentiate between the three probe types: Liveness, Readiness, and Startup
+> - Identify the consequences of missing or misconfigured health checks in production
 
 ---
 
@@ -12,8 +21,8 @@
 
 ```mermaid
 graph LR
-    APP[App process\nRunning ✅\nBut deadlocked 🧟] --> K8S[kubectl get pods\nStatus: Running\nREADY: 1/1]
-    K8S --> TRAFFIC[Traffic still\nrouted here ❌\nRequests timing out]
+    APP[App process<br/>Running ✅<br/>But deadlocked 🧟] --> K8S[kubectl get pods<br/>Status: Running<br/>READY: 1/1]
+    K8S --> TRAFFIC[Traffic still<br/>routed here ❌<br/>Requests timing out]
 ```
 
 The container is running, but the app is stuck in a deadlock, holding all worker threads, or has a corrupted internal state. Kubernetes doesn't know — it just sees a live process.
@@ -24,8 +33,8 @@ The container is running, but the app is stuck in a deadlock, holding all worker
 
 ```mermaid
 graph LR
-    DEPLOY[Deployment\nrolling update] --> NEW[New pod\nProcess started\nbut warming up]
-    NEW -->|"K8s sends traffic immediately\nbefore app is ready"| FAIL[User gets\n500 errors ❌\nduring warmup]
+    DEPLOY[Deployment<br/>rolling update] --> NEW[New pod<br/>Process started<br/>but warming up]
+    NEW -->|"K8s sends traffic immediately<br/>before app is ready"| FAIL[User gets<br/>500 errors ❌<br/>during warmup]
 ```
 
 A new pod starts, the container process launches, and Kubernetes immediately routes traffic to it. But your app needs 30 seconds to load its cache, connect to the database, and finish initializing.

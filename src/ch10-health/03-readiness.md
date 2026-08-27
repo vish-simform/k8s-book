@@ -1,8 +1,13 @@
 # 10.3 Readiness Probes — Control Traffic
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** A readiness probe answers "Is this container ready to receive traffic?" Failure removes the pod from the Service's Endpoints — requests stop going to it. Unlike liveness, failure does NOT restart the container.
+
+> **After this section you will be able to:**
+> - Configure readiness probes to gate incoming HTTP traffic until the application is fully warmed up
+> - Contrast readiness probe failure (traffic diversion) with liveness probe failure (pod restart)
+> - Achieve zero-downtime rollouts by coordinating readiness probes with deployment rollout strategies
 
 ---
 
@@ -11,11 +16,11 @@
 ```mermaid
 graph LR
     subgraph "Liveness Failure"
-        LP[Probe fails] --> KILL[Container\nkilled] --> RESTART[Container\nrestarted]
+        LP[Probe fails] --> KILL[Container<br/>killed] --> RESTART[Container<br/>restarted]
     end
     subgraph "Readiness Failure"
-        RP[Probe fails] --> REMOVE[Pod removed\nfrom Endpoints] --> WAIT[Pod stays\nrunning\nNo traffic]
-        WAIT --> RECOVER[Probe passes\nagain] --> READD[Pod re-added\nto Endpoints]
+        RP[Probe fails] --> REMOVE[Pod removed<br/>from Endpoints] --> WAIT[Pod stays<br/>running<br/>No traffic]
+        WAIT --> RECOVER[Probe passes<br/>again] --> READD[Pod re-added<br/>to Endpoints]
     end
 ```
 

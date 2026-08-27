@@ -1,8 +1,13 @@
 # 1.3 Control Plane Deep Dive
 
-⏱️ **~6 min read**
+⏱️ **6 min read · 4 min hands-on** · 🟢 Beginner
 
 > **TL;DR:** Four components run the K8s control plane. Understanding what each one does — and what breaks when it's gone — will save you hours of debugging.
+
+> **After this section you will be able to:**
+> - Explain the specific role of `kube-apiserver`, `etcd`, `kube-scheduler`, and `kube-controller-manager`
+> - Describe why etcd requires Raft consensus and why only the API Server accesses it directly
+> - Inspect control plane pods in the `kube-system` namespace
 
 ---
 
@@ -56,11 +61,11 @@ The scheduler watches for **Pending pods** (pods with no node assigned) and deci
 
 ```mermaid
 graph TD
-    A[New Pod: Pending\nno node assigned] --> B{Scheduler}
-    B --> C[Filter: Which nodes\ncan run this pod?]
-    C --> D[Score: Which node\nis the best fit?]
+    A[New Pod: Pending<br/>no node assigned] --> B{Scheduler}
+    B --> C[Filter: Which nodes<br/>can run this pod?]
+    C --> D[Score: Which node<br/>is the best fit?]
     D --> E[Bind pod to winning node]
-    E --> F[Pod: Scheduled\nKubelet takes over]
+    E --> F[Pod: Scheduled<br/>Kubelet takes over]
 ```
 
 **The scheduling decision considers:**
@@ -110,8 +115,8 @@ graph LR
     CM --> EC[Endpoints Controller]
     CM --> SA[ServiceAccount Controller]
 
-    RC -->|"Desired: 3, Got: 2\n→ Create 1 pod"| API[API Server]
-    NC -->|"Node unreachable\n→ Evict pods"| API
+    RC -->|"Desired: 3, Got: 2<br/>→ Create 1 pod"| API[API Server]
+    NC -->|"Node unreachable<br/>→ Evict pods"| API
 ```
 
 **A few important controllers:**

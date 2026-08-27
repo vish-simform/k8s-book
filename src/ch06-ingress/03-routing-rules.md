@@ -1,8 +1,13 @@
 # 6.3 Path-Based and Host-Based Routing
 
-⏱️ **~7 min read**
+⏱️ **5 min read · 7 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** Ingress supports two routing dimensions: **path-based** (same domain, different URL paths → different services) and **host-based** (different domains → different services). You can combine both in one Ingress resource.
+
+> **After this section you will be able to:**
+> - Implement path-based routing (`/api`, `/auth`, `/static`) to different backend services
+> - Implement host-based virtual host routing (`app.example.com`, `api.example.com`)
+> - Configure path types (`Prefix`, `Exact`) and common NGINX rewrite annotations
 
 ---
 

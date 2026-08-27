@@ -1,8 +1,13 @@
 # 11.5 Cluster Autoscaler
 
-⏱️ **~3 min read**
+⏱️ **4 min read · 4 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** While HPA adds more pods and VPA makes pods bigger, the Cluster Autoscaler (CA) adds more **nodes** when pods can't be scheduled. It also removes underutilized nodes to save cost.
+
+> **After this section you will be able to:**
+> - Explain how the Cluster Autoscaler provisions new cloud nodes when pending pods cannot fit
+> - Understand node scale-down evaluation, pod disruption budgets, and drain sequences
+> - Coordinate HPA, VPA, and Cluster Autoscaler for end-to-end automated capacity management
 
 ---
 
@@ -11,12 +16,12 @@
 ```mermaid
 graph TB
     TRAFFIC[Traffic spike] --> HPA
-    HPA[HPA\nAdds more pods] -->|"Pods pending\n(no space on nodes)"| CA
-    CA[Cluster Autoscaler\nAdds more nodes] -->|"Pods can now\nbe scheduled"| SCHED[Pods Running ✅]
+    HPA[HPA<br/>Adds more pods] -->|"Pods pending<br/>(no space on nodes)"| CA
+    CA[Cluster Autoscaler<br/>Adds more nodes] -->|"Pods can now<br/>be scheduled"| SCHED[Pods Running ✅]
 
     LOW[Traffic drops] --> HPA2
-    HPA2[HPA\nReduces pods] -->|"Nodes underutilized\n< 50% for 10min"| CA2
-    CA2[Cluster Autoscaler\nRemoves empty nodes] --> SAVE[Cost Savings 💰]
+    HPA2[HPA<br/>Reduces pods] -->|"Nodes underutilized<br/>< 50% for 10min"| CA2
+    CA2[Cluster Autoscaler<br/>Removes empty nodes] --> SAVE[Cost Savings 💰]
 ```
 
 | Autoscaler | What It Scales | Time to React |

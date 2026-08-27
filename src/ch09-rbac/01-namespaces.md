@@ -1,8 +1,13 @@
 # 9.1 Namespaces — Cluster Partitioning
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** A namespace is a virtual cluster inside a physical cluster. Resources in different namespaces are isolated by name but share the same underlying nodes and networking. Use namespaces to separate teams, environments, or applications.
+
+> **After this section you will be able to:**
+> - Partition cluster resources logically across teams and environments using Namespaces
+> - Understand what namespaces isolate (names, quotas) and what they do not (networks, nodes)
+> - Apply namespace-level resource quotas and limit ranges
 
 ---
 

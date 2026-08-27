@@ -1,8 +1,17 @@
 # 5.1 ClusterIP — Internal Communication
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟡 Intermediate
+
+> 📡 **Scenario:** Your e-commerce checkout pod is crashing intermittently under load. Every time a new replica boots up with a new IP, your frontend services drop checkout requests because they're still trying to reach the old pod IP.
+>
+> *After this section, you'll be able to wire services to stable virtual IPs with automatic load balancing across healthy pods in under 5 minutes.*
 
 > **TL;DR:** ClusterIP is the default Service type. It gives a group of pods a **stable virtual IP** that other pods can reach by name. Pod IPs change constantly; Service IPs never do.
+
+> **After this section you will be able to:**
+> - Explain how ClusterIP provides stable virtual IPs and DNS names for ephemeral pods
+> - Understand how Endpoints and EndpointSlices link Services to healthy backend pods
+> - Verify internal service discovery using `curl` and `nslookup` across namespaces
 
 ---
 
@@ -13,19 +22,19 @@ Pods are ephemeral. Every time a pod restarts, it gets a new IP address. If Serv
 ```mermaid
 graph LR
     subgraph "Without a Service"
-        A[frontend\n10.244.0.5] -->|"hardcoded: 10.244.1.8"| B1[backend\n10.244.1.8]
+        A[frontend<br/>10.244.0.5] -->|"hardcoded: 10.244.1.8"| B1[backend<br/>10.244.1.8]
         B1 -->|crashes!| DEAD[💀]
-        B2[backend\n10.244.1.9] -.->|"new pod, new IP\nfrontend doesn't know"| Q[❓]
+        B2[backend<br/>10.244.1.9] -.->|"new pod, new IP<br/>frontend doesn't know"| Q[❓]
     end
 ```
 
 ```mermaid
 graph LR
     subgraph "With a ClusterIP Service"
-        A2[frontend] -->|"always: backend-svc\n10.96.45.123"| SVC[Service\nClusterIP\n10.96.45.123]
-        SVC --> P1[backend pod\n10.244.1.9]
-        SVC --> P2[backend pod\n10.244.1.10]
-        SVC --> P3[backend pod\n10.244.1.11]
+        A2[frontend] -->|"always: backend-svc<br/>10.96.45.123"| SVC[Service<br/>ClusterIP<br/>10.96.45.123]
+        SVC --> P1[backend pod<br/>10.244.1.9]
+        SVC --> P2[backend pod<br/>10.244.1.10]
+        SVC --> P3[backend pod<br/>10.244.1.11]
     end
 ```
 
@@ -86,8 +95,8 @@ kube-proxy on every node watches these Endpoints and programs iptables rules to 
 
 ```mermaid
 graph TB
-    Client[Client Pod] -->|curl backend-svc:80| KP[kube-proxy\niptables rules]
-    KP -->|"random selection\n(round-robin)"| P1[Pod 10.244.0.4:8080]
+    Client[Client Pod] -->|curl backend-svc:80| KP[kube-proxy<br/>iptables rules]
+    KP -->|"random selection<br/>(round-robin)"| P1[Pod 10.244.0.4:8080]
     KP --> P2[Pod 10.244.0.5:8080]
     KP --> P3[Pod 10.244.0.6:8080]
 ```

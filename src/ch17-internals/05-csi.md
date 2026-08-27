@@ -1,8 +1,13 @@
 # 17.5 CSI — Container Storage Interface
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 4 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** The **CSI (Container Storage Interface)** is to storage what CRI is to containers and CNI is to networking — a standard plugin API so Kubernetes doesn't need to know about every cloud provider's disk implementation.
+
+> **After this section you will be able to:**
+> - Explain the Container Storage Interface (CSI) plugin architecture and controller/node drivers
+> - Trace the three stages of volume mounting: Provision, Attach (`ControllerPublish`), and Mount (`NodePublish`)
+> - Inspect CSI driver registrations and volume attachments inside the cluster
 
 ---
 

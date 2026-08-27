@@ -1,8 +1,13 @@
 # 12.3 Chart Anatomy — Templates and Values
 
-⏱️ **~7 min read**
+⏱️ **6 min read · 6 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** A chart is a directory with a `Chart.yaml` (metadata), `values.yaml` (defaults), and a `templates/` directory with Go-templated Kubernetes YAML files. The templates use `{{ .Values.xyz }}` to insert values at render time.
+
+> **After this section you will be able to:**
+> - Deconstruct Helm chart directory layout (`Chart.yaml`, `values.yaml`, `templates/`, `_helpers.tpl`)
+> - Write Go template syntax, pipelines (`default`, `quote`, `indent`), and conditional flow controls
+> - Render and debug template manifests locally without installing using `helm template`
 
 ---
 

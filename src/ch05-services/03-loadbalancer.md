@@ -1,8 +1,13 @@
 # 5.3 LoadBalancer — Cloud-Native Exposure
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** A LoadBalancer Service provisions a real cloud load balancer (AWS ELB, Azure ALB, GCP CLB) with a public IP automatically. On Minikube, use `minikube tunnel` to simulate this. In production, this is the standard way to expose services to the internet.
+
+> **After this section you will be able to:**
+> - Provision cloud provider load balancers automatically with `type: LoadBalancer`
+> - Simulate external cloud load balancers locally in Minikube using `minikube tunnel`
+> - Configure traffic policies (`externalTrafficPolicy: Local`) to preserve client source IPs
 
 ---
 
@@ -25,9 +30,9 @@ spec:
 
 ```mermaid
 graph LR
-    Internet -->|"Public IP\n203.0.113.42:80"| LB["Cloud Load Balancer\n(AWS ELB / Azure ALB / GCP CLB)"]
-    LB --> N1[Node 1\nNodePort]
-    LB --> N2[Node 2\nNodePort]
+    Internet -->|"Public IP<br/>203.0.113.42:80"| LB["Cloud Load Balancer<br/>(AWS ELB / Azure ALB / GCP CLB)"]
+    LB --> N1[Node 1<br/>NodePort]
+    LB --> N2[Node 2<br/>NodePort]
     N1 & N2 --> SVC[ClusterIP Service]
     SVC --> P1[Pod] & P2[Pod] & P3[Pod]
 ```

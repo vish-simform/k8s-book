@@ -1,8 +1,13 @@
 # 3.3 Multi-Container Pods: Sidecars, Init, and Ambassadors
 
-⏱️ **~7 min read**
+⏱️ **5 min read · 8 min hands-on** · 🟢 Beginner
 
 > **TL;DR:** Multi-container pods solve specific co-location problems. The three patterns are: **sidecar** (augments the main container), **init container** (runs setup before the main container), and **ambassador** (proxies external traffic). Show the YAML first, understand the pattern second.
+
+> **After this section you will be able to:**
+> - Differentiate between Init Containers and Sidecar Containers
+> - Implement sidecar patterns for log aggregation, proxies, and configuration syncing
+> - Coordinate initialization sequences where init containers complete before the main app boots
 
 ---
 
@@ -41,12 +46,12 @@ spec:
 ```mermaid
 graph LR
     subgraph "Pod: app-with-logger"
-        APP[nginx\nwrites to\n/var/log/nginx]
-        VOL[(emptyDir\nshared-logs)]
-        LOG[log-shipper\nreads from\n/logs]
+        APP[nginx<br/>writes to<br/>/var/log/nginx]
+        VOL[(emptyDir<br/>shared-logs)]
+        LOG[log-shipper<br/>reads from<br/>/logs]
         APP -->|writes| VOL
         VOL -->|reads| LOG
-        LOG -->|ships to| EXT[External\nLog System]
+        LOG -->|ships to| EXT[External<br/>Log System]
     end
 ```
 

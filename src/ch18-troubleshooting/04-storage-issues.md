@@ -1,8 +1,13 @@
 # 18.4 Storage and Permission Issues
 
-⏱️ **~7 min read**
+⏱️ **6 min read · 7 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** Storage bugs in Kubernetes almost always fall into three categories: the volume wasn't provisioned, it can't be mounted (because it's already attached elsewhere or the node doesn't have the driver), or the container can't write to it (filesystem permissions).
+
+> **After this section you will be able to:**
+> - Debug `Pending` PVCs caused by missing StorageClasses or capacity constraints
+> - Resolve `Multi-Attach error for volume` when RWO volumes are locked by other nodes
+> - Fix container filesystem permission denied errors using `securityContext.fsGroup`
 
 ---
 

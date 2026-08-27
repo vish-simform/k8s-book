@@ -1,8 +1,13 @@
 # 7.3 Environment Variables vs Volume Mounts
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** You can inject ConfigMap/Secret data into pods as environment variables (simple, but static) or as file mounts (more powerful, support live updates). Choose based on whether your app reads config from env vars or files.
+
+> **After this section you will be able to:**
+> - Compare the trade-offs of environment variables vs volume mounts for config delivery
+> - Understand why mounted files update dynamically while environment variables remain static
+> - Select the optimal injection pattern based on application architecture and reload capabilities
 
 ---
 
@@ -126,8 +131,8 @@ volumes:
 
 ```mermaid
 graph LR
-    CM[ConfigMap\nupdated] -->|"Kubelet detects change\n~60 second delay"| VM[Volume Mount\n/etc/config/KEY\nupdated automatically ✅]
-    CM -->|"Container was started\nwith env var value"| EV[Environment Variable\nNOT updated ❌\nrequires pod restart]
+    CM[ConfigMap<br/>updated] -->|"Kubelet detects change<br/>~60 second delay"| VM[Volume Mount<br/>/etc/config/KEY<br/>updated automatically ✅]
+    CM -->|"Container was started<br/>with env var value"| EV[Environment Variable<br/>NOT updated ❌<br/>requires pod restart]
 ```
 
 | | Env Vars | Volume Mounts |

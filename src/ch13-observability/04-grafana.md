@@ -1,8 +1,13 @@
 # 13.4 Dashboards with Grafana
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 7 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** Grafana is the visualization layer for your observability stack. It connects to Prometheus (and Loki) as data sources and turns PromQL queries into live dashboards. The kube-prometheus-stack installs pre-built dashboards for Kubernetes itself — you extend these with your own panels for application-level metrics.
+
+> **After this section you will be able to:**
+> - Deploy Grafana in Kubernetes and connect Prometheus/Loki data sources
+> - Import community Kubernetes cluster dashboards and customize visualization panels
+> - Configure actionable alerts based on metric thresholds
 
 ---
 
@@ -11,16 +16,16 @@
 ```mermaid
 graph LR
     subgraph "Data Sources"
-        PROM["Prometheus\n(metrics)"]
-        LOKI["Loki\n(logs)"]
-        PG["PostgreSQL\n(optional)"]
+        PROM["Prometheus<br/>(metrics)"]
+        LOKI["Loki<br/>(logs)"]
+        PG["PostgreSQL<br/>(optional)"]
     end
 
     subgraph "Grafana"
-        DS["Data Source\nPlugins"]
-        PANELS["Panels\n(time series, gauge,\ntable, heatmap…)"]
-        DASH["Dashboards\n(collections of panels)"]
-        ALERT["Grafana Alerts\n(unified alerting)"]
+        DS["Data Source<br/>Plugins"]
+        PANELS["Panels<br/>(time series, gauge,<br/>table, heatmap…)"]
+        DASH["Dashboards<br/>(collections of panels)"]
+        ALERT["Grafana Alerts<br/>(unified alerting)"]
     end
 
     subgraph "Users"

@@ -1,8 +1,13 @@
 # 15.2 Network Policies — Microsegmentation
 
-⏱️ **~8 min read**
+⏱️ **6 min read · 8 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** By default, every pod in a Kubernetes cluster can talk to every other pod — there are no network firewalls between them. **Network Policies** are Kubernetes-native firewall rules that restrict which pods can talk to which, on which ports. The golden rule for production: **default-deny all traffic, then explicitly allow only what's needed.**
+
+> **After this section you will be able to:**
+> - Implement zero-trust network isolation using Kubernetes `NetworkPolicy` resources
+> - Write Ingress and Egress traffic filtering rules using pod selectors, namespace selectors, and CIDR blocks
+> - Test and verify default-deny network policies with interactive debug containers
 
 ---
 
@@ -32,14 +37,14 @@ With Network Policies (default-deny + allow-list):
 
 ```mermaid
 graph TD
-    NP["NetworkPolicy\n(applied to pods via podSelector)"]
-    ING["Ingress Rules\n(who can send TO these pods)"]
-    EGR["Egress Rules\n(where these pods can send TO)"]
+    NP["NetworkPolicy<br/>(applied to pods via podSelector)"]
+    ING["Ingress Rules<br/>(who can send TO these pods)"]
+    EGR["Egress Rules<br/>(where these pods can send TO)"]
     
     NP --> ING & EGR
     
-    ING --> SRC["Sources:\npodSelector\nnamespaceSelector\nipBlock (CIDR)"]
-    EGR --> DST["Destinations:\npodSelector\nnamespaceSelector\nipBlock (CIDR)"]
+    ING --> SRC["Sources:<br/>podSelector<br/>namespaceSelector<br/>ipBlock (CIDR)"]
+    EGR --> DST["Destinations:<br/>podSelector<br/>namespaceSelector<br/>ipBlock (CIDR)"]
 ```
 
 > **CNI Requirement:** Network Policies require a CNI plugin that enforces them — **Calico**, **Cilium**, or **Weave**. The default Minikube CNI (kindnet) does **not** enforce Network Policies. Use `minikube start --cni=calico`.
@@ -189,6 +194,7 @@ spec:
     - protocol: TCP
       port: 8080
 ---
+
 # Allow backend to reach database on port 5432
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy

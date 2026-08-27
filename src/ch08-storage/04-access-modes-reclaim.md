@@ -1,8 +1,13 @@
 # 8.4 Access Modes and Reclaim Policies
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** Access modes define how many nodes can mount a volume simultaneously. Reclaim policies define what happens to the underlying storage when a PVC is deleted. Getting these right prevents both data loss and runaway cloud costs.
+
+> **After this section you will be able to:**
+> - Differentiate volume access modes: `ReadWriteOnce` (RWO), `ReadOnlyMany` (ROX), `ReadWriteMany` (RWX)
+> - Configure persistent volume reclaim policies (`Delete`, `Retain`, `Recycle`) to protect data
+> - Recover and manage retained storage volumes after PVC deletion
 
 ---
 
@@ -18,13 +23,13 @@
 ```mermaid
 graph TB
     subgraph "ReadWriteOnce (RWO)"
-        N1[Node 1\nMounts RW] --> V1[(Volume)]
-        N2[Node 2\n❌ Cannot mount] -.->|blocked| V1
+        N1[Node 1<br/>Mounts RW] --> V1[(Volume)]
+        N2[Node 2<br/>❌ Cannot mount] -.->|blocked| V1
     end
     subgraph "ReadWriteMany (RWX)"
-        N3[Node 1\nMounts RW] --> V2[(NFS Volume)]
-        N4[Node 2\nMounts RW] --> V2
-        N5[Node 3\nMounts RW] --> V2
+        N3[Node 1<br/>Mounts RW] --> V2[(NFS Volume)]
+        N4[Node 2<br/>Mounts RW] --> V2
+        N5[Node 3<br/>Mounts RW] --> V2
     end
 ```
 
@@ -83,12 +88,12 @@ reclaimPolicy: Delete
 
 ```mermaid
 graph TD
-    Q{Is this data\ncritical / irreplaceable?}
-    Q -->|Yes| R[Retain\n+ automated backup]
+    Q{Is this data<br/>critical / irreplaceable?}
+    Q -->|Yes| R[Retain<br/>+ automated backup]
     Q -->|No or easily recreated| D[Delete]
     
-    R --> RA[Production databases\nUser uploads\nTransaction logs]
-    D --> DA[Caches\nTemp processing\nTest data]
+    R --> RA[Production databases<br/>User uploads<br/>Transaction logs]
+    D --> DA[Caches<br/>Temp processing<br/>Test data]
 ```
 
 > ⚠️ **Warning:** `reclaimPolicy: Delete` with a production database is a common disaster scenario. A developer runs `kubectl delete pvc prod-db-pvc` thinking it's a dev environment — the EBS volume and all its data are gone instantly, with no recycle bin. Always use `Retain` for production databases.

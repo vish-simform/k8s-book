@@ -1,8 +1,13 @@
 # 3.4 Resource Requests and Limits
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟢 Beginner
 
 > **TL;DR:** `requests` = "I need at least this much" (used for scheduling). `limits` = "I cannot exceed this much" (enforced at runtime). Getting these right is the difference between a stable cluster and one that OOMKills pods in the middle of the night.
+
+> **After this section you will be able to:**
+> - Specify CPU (`m`) and Memory (`Mi`/`Gi`) resource `requests` vs `limits` in Pod specs
+> - Explain the difference between CPU throttling and Out-Of-Memory (`OOMKilled`) termination
+> - Predict Quality of Service (QoS) class assignments (`Guaranteed`, `Burstable`, `BestEffort`)
 
 ---
 
@@ -29,11 +34,11 @@ The difference in behavior between CPU and memory limits is critical:
 graph LR
     subgraph "CPU Exceeded"
         A[Container wants 600m CPU] --> B[Limit: 500m]
-        B --> C[Throttled\nSlowed down\nStill running ✅]
+        B --> C[Throttled<br/>Slowed down<br/>Still running ✅]
     end
     subgraph "Memory Exceeded"
         D[Container uses 300Mi RAM] --> E[Limit: 256Mi]
-        E --> F[OOMKilled\nTerminated immediately ❌\nExit code 137]
+        E --> F[OOMKilled<br/>Terminated immediately ❌<br/>Exit code 137]
     end
 ```
 

@@ -1,8 +1,13 @@
 # 9.4 Multi-Tenancy Patterns
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** Multi-tenancy means multiple teams or customers share one cluster safely. The standard Kubernetes approach uses namespaces + RBAC + ResourceQuotas + NetworkPolicy. For stronger isolation, use separate clusters.
+
+> **After this section you will be able to:**
+> - Implement multi-tenant isolation patterns using Namespaces, RBAC, and ResourceQuotas
+> - Evaluate soft multi-tenancy (namespaced) vs hard multi-tenancy (multi-cluster or virtual clusters)
+> - Prevent cross-tenant noisy neighbor problems with compute quotas
 
 ---
 
@@ -11,14 +16,14 @@
 ```mermaid
 graph LR
     subgraph "Soft Tenancy (Namespace-per-Team)"
-        N1[namespace: team-a\nRBAC + Quota]
-        N2[namespace: team-b\nRBAC + Quota]
-        N1 & N2 --> CLUSTER1[Shared Cluster\nShared Nodes]
+        N1[namespace: team-a<br/>RBAC + Quota]
+        N2[namespace: team-b<br/>RBAC + Quota]
+        N1 & N2 --> CLUSTER1[Shared Cluster<br/>Shared Nodes]
     end
 
     subgraph "Hard Tenancy (Cluster-per-Team)"
-        CLUSTER2[Cluster A\nteam-a only]
-        CLUSTER3[Cluster B\nteam-b only]
+        CLUSTER2[Cluster A<br/>team-a only]
+        CLUSTER3[Cluster B<br/>team-b only]
     end
 ```
 
@@ -109,6 +114,7 @@ spec:
   # No ingress rules = deny all incoming traffic
 
 ---
+
 # allow-same-namespace.yaml — Allow traffic within the namespace
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy

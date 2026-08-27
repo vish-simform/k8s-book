@@ -1,56 +1,61 @@
-# Appendix A: YAML Crash Course
+# Appendix A: YAML Crash Course for Kubernetes
 
-> **For readers who need a quick YAML refresher before diving into Kubernetes manifests.**
-
----
-
-## Why YAML?
-
-Kubernetes uses YAML (YAML Ain't Markup Language) for all resource definitions. It's human-readable and supports complex nested structures. Every `kubectl apply -f` command reads a YAML file.
+> **TL;DR:** YAML is the language of Kubernetes manifests. This appendix covers just enough YAML to write, read, and debug manifests without getting burned by whitespace, types, or syntax gotchas.
 
 ---
 
-## Core Syntax Rules
+## The Basics
 
-### 1. Indentation is Meaning
-
-YAML uses **spaces** (not tabs!) to indicate hierarchy. Two spaces per level is the convention in Kubernetes:
+### 1. Key-Value Pairs
 
 ```yaml
-spec:
-  containers:       # 2 spaces
-    - name: nginx   # 4 spaces (nested under containers)
-      image: nginx  # 4 spaces (same level as name)
+name: my-app
+port: 8080
+enabled: true
 ```
 
-> ⚠️ **Warning:** NEVER use tabs in YAML. Use spaces only. Most text editors can be configured to convert tabs to spaces — do it.
+- Keys and values are separated by `: ` (colon followed by a space).
+- Values don't need quotes unless they contain special characters (`:`, `{`, `}`, `[`, `]`, `,`, `&`, `*`, `#`, `?`, `|`, `-`, `<`, `>`, `=`, `!`, `%`, `@`, `\`).
 
-### 2. Key-Value Pairs
+### 2. Indentation Matters
+
+- Use **2 spaces** per indentation level.
+- **NEVER use tabs.** (YAML parsers will reject tabs with syntax errors.)
+- Children must be indented further than their parents.
 
 ```yaml
-apiVersion: apps/v1      # string value
-replicas: 3              # integer value
-enabled: true            # boolean value
-name: null               # null value
+parent:
+  child:
+    grandchild: value
 ```
 
-### 3. Strings
+### 3. Strings and Quotes
 
 ```yaml
-simple: hello world          # no quotes needed for simple strings
-quoted: "hello: world"       # quotes required if string contains special chars
-multiline: |                 # literal block (preserves newlines)
-  line one
-  line two
-folded: >                    # folded block (newlines become spaces)
-  this is all
-  one line
+# Plain string (no quotes needed)
+message: Hello World
+
+# String with special characters (quotes required)
+url: "https://example.com:8080"
+selector: "app=web,tier=frontend"
+
+# Multi-line string (preserves newlines: |)
+script: |
+  #!/bin/bash
+  echo "Starting..."
+  python app.py
+
+# Multi-line string (folds newlines into spaces: >)
+description: >
+  This is a long description
+  that will be joined into
+  a single line.
 ```
 
-### 4. Lists (Sequences)
+### 4. Lists (Arrays)
 
 ```yaml
-# Block style (most common in K8s)
+# Block style (preferred in K8s)
 fruits:
   - apple
   - banana
@@ -62,7 +67,7 @@ fruits: [apple, banana, cherry]
 # List of objects (the "-" starts each item)
 containers:
   - name: nginx
-    image: nginx:latest
+    image: nginx:1.25
   - name: sidecar
     image: busybox:1.36
 ```
@@ -83,13 +88,15 @@ resources:
 
 ## Common YAML Mistakes
 
-| Mistake | Wrong | Right |
+| Mistake | Avoid | Preferred / Right |
 |---|---|---|
-| Tab indentation | `\tname: nginx` | `  name: nginx` (spaces) |
+| Tab indentation | `\tname: nginx` | `  name: nginx` (2 spaces) |
 | Missing quotes on special strings | `value: yes:no` | `value: "yes:no"` |
 | Wrong list item indent | `containers:` / `- name: x` (same level) | `containers:` / `  - name: x` (indented) |
-| Incorrect boolean | `enabled: True` | `enabled: true` (lowercase) |
+| Non-standard boolean | `enabled: True` | `enabled: true` (lowercase) |
 | YAML interpreted as number | `version: 1.10` (becomes 1.1) | `version: "1.10"` |
+
+> 💡 **Note:** YAML 1.1 (used by Kubernetes) technically accepts `True`, `TRUE`, `yes`, `on` as truthy values. However, the **strong convention** in Kubernetes manifests is lowercase `true`/`false`. Using non-standard variants may confuse teammates and linters.
 
 ---
 
@@ -117,7 +124,7 @@ spec:                     # the desired state (varies by resource type)
     spec:
       containers:
         - name: my-container
-          image: nginx:latest
+          image: nginx:1.25
 ```
 
 ---
@@ -128,23 +135,37 @@ Separate resources with `---`:
 
 ```yaml
 apiVersion: v1
-kind: ConfigMap
+kind: Service
 metadata:
-  name: my-config
-data:
-  key: value
+  name: my-service
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: my-app
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: my-deployment
 spec:
-  # ...
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.25
 ```
 
 ---
 
-## Useful YAML Validation Tools
+## Validating YAML
 
 ```bash
 # Validate YAML syntax (not K8s schema)
@@ -213,3 +234,21 @@ volumes:
     configMap:
       name: my-configmap
 ```
+
+---
+
+## ✅ Quick Check
+
+**Q1:** Why must port numbers or versions like `version: 1.10` be wrapped in quotes?
+
+<details>
+<summary>Answer</summary>
+Without quotes, the YAML parser interprets <code>1.10</code> as a floating-point number <code>1.1</code> (dropping trailing zeros), or evaluates unquoted values like <code>PORT: 80</code> as integers when a string was expected by the API schema.
+</details>
+
+**Q2:** What happens if you accidentally use tabs instead of spaces in a manifest?
+
+<details>
+<summary>Answer</summary>
+The YAML parser will reject the manifest with a syntax error such as <code>mapping values are not allowed here</code> or <code>found character '\t' that cannot start any token</code>. Kubernetes manifests require 2 spaces per indentation level.
+</details>

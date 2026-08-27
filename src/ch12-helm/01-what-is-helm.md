@@ -1,8 +1,13 @@
 # 12.1 What Helm Is and Why It Exists
 
-⏱️ **~4 min read**
+⏱️ **4 min read · 4 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** Helm is the Kubernetes package manager. It bundles all the YAML files for an application (Deployment, Service, Ingress, ConfigMap, Secrets…) into a reusable, versioned package called a **chart**. One command installs, upgrades, or removes the whole stack.
+
+> **After this section you will be able to:**
+> - Explain why Helm is the package manager for Kubernetes and how it eliminates YAML duplication
+> - Understand the concepts of Charts, Values, and Releases
+> - Identify production use cases where Helm provides reproducible deployments
 
 ---
 
@@ -34,11 +39,11 @@ Now do this for 3 environments (dev, staging, prod) with different image tags, r
 
 ```mermaid
 graph LR
-    CHART["Chart\n(Template YAML\n+ defaults)"] -->|"helm install\n--values prod.yaml"| RELEASE
-    VALUES["values.yaml\n(prod overrides)"] --> RELEASE
-    RELEASE["Release\n(running instance\nof the chart)"] --> K8S["Kubernetes\n(actual objects)"]
+    CHART["Chart<br/>(Template YAML<br/>+ defaults)"] -->|"helm install<br/>--values prod.yaml"| RELEASE
+    VALUES["values.yaml<br/>(prod overrides)"] --> RELEASE
+    RELEASE["Release<br/>(running instance<br/>of the chart)"] --> K8S["Kubernetes<br/>(actual objects)"]
     
-    REPO["Helm Repo\n(ArtifactHub)"] -->|"helm install\nbitnami/postgresql"| RELEASE2
+    REPO["Helm Repo<br/>(ArtifactHub)"] -->|"helm install<br/>bitnami/postgresql"| RELEASE2
     RELEASE2 --> K8S
 ```
 

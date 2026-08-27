@@ -1,8 +1,13 @@
 # 18.3 Networking Failures — DNS, Services, Connectivity
 
-⏱️ **~10 min read**
+⏱️ **7 min read · 8 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** Networking bugs in Kubernetes have a reliable fingerprint. A service that doesn't route traffic is almost always a label selector mismatch. A DNS failure is almost always a CoreDNS issue. Start by verifying each layer with `curl` and `nslookup` from inside a pod.
+
+> **After this section you will be able to:**
+> - Debug Service routing failures caused by mismatched label selectors and missing Endpoints
+> - Troubleshoot CoreDNS resolution failures using DNS debug pods and `dig`/`nslookup`
+> - Identify traffic drops caused by restrictive or misconfigured `NetworkPolicy` rules
 
 ---
 
@@ -12,10 +17,10 @@ Before anything else, deploy a debug pod you can use as a network probe:
 
 ```bash
 # Launch a debug pod with curl and nslookup
-kubectl run netdebug --image=nicolaka/netshoot --rm -it --restart=Never -- bash
+kubectl run netdebug --image=nicolaka/netshoot:v0.13 --rm -it --restart=Never -- bash
 ```
 
-`nicolaka/netshoot` has: `curl`, `nslookup`, `dig`, `nmap`, `tcpdump`, `netstat`, `ip`, `traceroute` — everything you need.
+`nicolaka/netshoot:v0.13` has: `curl`, `nslookup`, `dig`, `nmap`, `tcpdump`, `netstat`, `ip`, `traceroute` — everything you need.
 
 ---
 

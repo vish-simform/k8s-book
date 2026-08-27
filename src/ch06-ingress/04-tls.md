@@ -1,8 +1,13 @@
 # 6.4 TLS Termination
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** The Ingress Controller handles TLS (HTTPS) so your backend services don't have to. You create a TLS Secret containing a certificate and key, reference it in your Ingress, and the controller handles encryption/decryption transparently.
+
+> **After this section you will be able to:**
+> - Create and store TLS certificates and private keys as Kubernetes TLS Secrets
+> - Configure Ingress resources for automated SSL/TLS termination
+> - Verify HTTPS redirection and encrypted traffic flow with `curl -k`
 
 ---
 
@@ -14,9 +19,9 @@ sequenceDiagram
     participant IC as Ingress Controller (TLS terminates here)
     participant S as Backend Service (plain HTTP)
 
-    C->>IC: HTTPS request (encrypted)\nHost: myapp.local
+    C->>IC: HTTPS request (encrypted)<br/>Host: myapp.local
     IC->>IC: Decrypt using TLS cert
-    IC->>S: HTTP request (plain)\nforwarded to backend-svc:80
+    IC->>S: HTTP request (plain)<br/>forwarded to backend-svc:80
     S-->>IC: HTTP response
     IC-->>C: HTTPS response (encrypted)
 ```

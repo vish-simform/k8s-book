@@ -1,8 +1,13 @@
 # 11.4 Vertical Pod Autoscaler (VPA)
 
-⏱️ **~4 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** VPA automatically adjusts a pod's resource requests and limits based on observed actual usage. It solves the "what should I set my requests to?" question — especially useful for workloads with stable traffic patterns.
+
+> **After this section you will be able to:**
+> - Understand Vertical Pod Autoscaler (VPA) architecture and operating modes (`Off`, `Initial`, `Recreate`, `Auto`)
+> - Use VPA in recommendation mode to rightsize resource requests accurately
+> - Analyze when to use HPA vs VPA (and why combining both on CPU/Memory causes conflict)
 
 ---
 
@@ -21,9 +26,9 @@
 
 ```mermaid
 graph LR
-    PODS[Running Pods\nActual usage data] -->|Collects metrics| REC[VPA Recommender\nML-based analysis]
+    PODS[Running Pods<br/>Actual usage data] -->|Collects metrics| REC[VPA Recommender<br/>ML-based analysis]
     REC -->|Generates recommendation| VPA[VPA Object]
-    VPA -->|Applies on pod restart\nor evicts to apply| POD[Pod with\nupdated requests]
+    VPA -->|Applies on pod restart<br/>or evicts to apply| POD[Pod with<br/>updated requests]
 ```
 
 VPA has three components:

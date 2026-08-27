@@ -1,8 +1,13 @@
 # 7.4 Immutable ConfigMaps and Secret Rotation
 
-⏱️ **~4 min read**
+⏱️ **4 min read · 5 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** Mark ConfigMaps and Secrets as `immutable: true` for performance gains and accidental-change protection. For Secret rotation, update the Secret object and trigger a pod restart — or use volume mounts for zero-restart rotation.
+
+> **After this section you will be able to:**
+> - Optimize kube-apiserver performance and prevent accidental drift using `immutable: true`
+> - Implement safe credential rotation patterns using rolling restarts and mounted volumes
+> - Automate pod rollouts on secret updates using config hash annotations
 
 ---
 

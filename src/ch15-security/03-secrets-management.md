@@ -1,8 +1,13 @@
 # 15.3 Secrets Management — Encryption and External Vaults
 
-⏱️ **~7 min read**
+⏱️ **5 min read · 6 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** Kubernetes Secrets are **base64-encoded, not encrypted** by default — anyone with etcd access reads them as plaintext. The two defences: **Encryption at Rest** (encrypt Secrets in etcd using a KMS provider) and **External Secret Stores** (HashiCorp Vault, AWS Secrets Manager, Azure Key Vault) so the actual secret value never touches etcd at all.
+
+> **After this section you will be able to:**
+> - Identify security vulnerabilities in native base64 secrets storage
+> - Evaluate production secrets solutions: HashiCorp Vault, Sealed Secrets, and External Secrets Operator (ESO)
+> - Integrate cloud key management systems (KMS) for envelope encryption of etcd
 
 ---
 
@@ -107,10 +112,10 @@ With external secrets, the actual secret value **never enters etcd**. The workfl
 
 ```mermaid
 graph LR
-    DEV["Developer\npushes secret to\nVault/AWS SM"] --> STORE["External Secret Store\n(HashiCorp Vault /\nAWS Secrets Manager)"]
-    STORE --> OP["External Secrets\nOperator (in-cluster)"]
-    OP --> |"Creates/syncs\nKubernetes Secret"| SEC["Kubernetes Secret\n(synced, auto-rotated)"]
-    SEC --> POD["Pod\n(reads as normal Secret)"]
+    DEV["Developer<br/>pushes secret to<br/>Vault/AWS SM"] --> STORE["External Secret Store<br/>(HashiCorp Vault /<br/>AWS Secrets Manager)"]
+    STORE --> OP["External Secrets<br/>Operator (in-cluster)"]
+    OP --> |"Creates/syncs<br/>Kubernetes Secret"| SEC["Kubernetes Secret<br/>(synced, auto-rotated)"]
+    SEC --> POD["Pod<br/>(reads as normal Secret)"]
 ```
 
 ### External Secrets Operator (ESO)
@@ -142,6 +147,7 @@ spec:
           mountPath: "kubernetes"
           role: "my-app-role"
 ---
+
 # ExternalSecret: which keys to fetch and how to map them
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret

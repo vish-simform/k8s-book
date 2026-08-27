@@ -1,8 +1,13 @@
 # 16.1 GitOps Principles — Git as the Source of Truth
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 4 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** GitOps means the **desired state of your cluster lives in Git**. A reconciliation loop inside the cluster continuously compares the desired state (Git) with the actual state (cluster) and corrects any drift — automatically. You never run `kubectl apply` manually in production. Everything goes through a pull request.
+
+> **After this section you will be able to:**
+> - Explain the 4 core principles of GitOps and why Git serves as the single source of truth
+> - Compare push-based CI/CD pipelines with pull-based in-cluster reconciliation
+> - Eliminate direct production `kubectl apply` commands in favor of auditable Pull Request workflows
 
 ---
 

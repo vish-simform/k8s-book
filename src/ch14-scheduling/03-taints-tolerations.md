@@ -1,8 +1,13 @@
 # 14.3 Taints and Tolerations
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 6 min hands-on** · 🔴 Advanced
 
 > **TL;DR:** **Taints** are marks you put on nodes that **repel** pods. **Tolerations** are declarations on pods that say "I can handle that taint." The combination lets you dedicate nodes to specific workloads (e.g., GPU nodes for ML jobs only) or protect critical infrastructure nodes (like control-plane nodes) from regular workloads.
+
+> **After this section you will be able to:**
+> - Apply node Taints to repel unauthorized workloads from dedicated nodes
+> - Configure Pod Tolerations to allow scheduling on tainted nodes
+> - Understand taint effects: `NoSchedule`, `PreferNoSchedule`, and `NoExecute`
 
 ---
 

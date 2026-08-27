@@ -1,8 +1,13 @@
 # 6.1 Ingress Controllers and Resources
 
-⏱️ **~5 min read**
+⏱️ **5 min read · 5 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** Ingress is a two-part system: an **Ingress Controller** (a running pod that does the actual routing) and **Ingress Resources** (YAML rules that tell it where to send traffic). Without an Ingress Controller, Ingress Resources do nothing.
+
+> **After this section you will be able to:**
+> - Explain the difference between Ingress Controllers (routing engines) and Ingress Resources (rules)
+> - Compare Ingress architecture against multiple LoadBalancer Services for cost and complexity
+> - Understand HTTP/HTTPS routing logic at Layer 7
 
 ---
 
@@ -21,12 +26,12 @@ With Ingress:
 
 ```mermaid
 graph LR
-    Internet -->|"203.0.113.1:443"| LB[Cloud LB\n1 IP total]
-    LB --> IC[Ingress Controller\nnginx pod]
-    IC -->|"/api/*"| API[api-svc\n:8080]
-    IC -->|"/auth/*"| AUTH[auth-svc\n:3000]
-    IC -->|"/"| WEB[web-svc\n:80]
-    IC -->|"admin.example.com"| ADMIN[admin-svc\n:9000]
+    Internet -->|"203.0.113.1:443"| LB[Cloud LB<br/>1 IP total]
+    LB --> IC[Ingress Controller<br/>nginx pod]
+    IC -->|"/api/*"| API[api-svc<br/>:8080]
+    IC -->|"/auth/*"| AUTH[auth-svc<br/>:3000]
+    IC -->|"/"| WEB[web-svc<br/>:80]
+    IC -->|"admin.example.com"| ADMIN[admin-svc<br/>:9000]
 ```
 
 ---

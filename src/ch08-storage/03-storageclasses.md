@@ -1,8 +1,13 @@
 # 8.3 StorageClasses and Dynamic Provisioning
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 6 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** Instead of admins creating PVs by hand, a StorageClass tells Kubernetes how to **automatically** provision storage on demand. When a PVC is created, the StorageClass's provisioner creates the backing volume automatically. This is how every major cloud Kubernetes offering works.
+
+> **After this section you will be able to:**
+> - Enable dynamic volume provisioning using StorageClasses and volume provisioners
+> - Configure volume expansion capabilities and `volumeBindingMode: WaitForFirstConsumer`
+> - Differentiate between cloud storage tiers (SSD vs HDD) via distinct StorageClasses
 
 ---
 

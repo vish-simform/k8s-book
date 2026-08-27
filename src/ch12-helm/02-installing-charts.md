@@ -1,8 +1,13 @@
 # 12.2 Installing Charts — `helm install` and Repositories
 
-⏱️ **~6 min read**
+⏱️ **5 min read · 7 min hands-on** · 🟡 Intermediate
 
 > **TL;DR:** Add a chart repository, search for what you need, preview the default values, customize with a `values.yaml`, and install. The output includes connection instructions from the chart's NOTES.txt.
+
+> **After this section you will be able to:**
+> - Add, update, and search chart repositories using the Helm CLI
+> - Customize chart configurations using custom `values.yaml` files and `--set` overrides
+> - Inspect release status, metadata, and generated notes with `helm status` and `helm list`
 
 ---
 
